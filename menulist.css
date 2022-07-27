@@ -1,0 +1,9 @@
+﻿body {
+}
+.productlist li
+{
+	display: inline;
+	float: left;
+	margin-bottom: 8px;
+	margin-left: 14px;
+}

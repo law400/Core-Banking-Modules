@@ -1,0 +1,244 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Dashboards.aspx.vb" Inherits="Dashboards" %>
+
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Charting" tagprefix="telerik" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+      <title>Untitled Page</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+   
+    <link href="Style.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+    <!-- Theme style -->
+     <link rel="stylesheet" href="dist/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="dist/ionicons.min.css"/>
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"/>
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css"/>
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="plugins/morris/morris.css"/>
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css"/>
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css"/>
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"/>
+
+    
+   
+    </head>
+<body>
+	<form runat="server" autocomplete="off">     <telerik:RadScriptManager ID="RadScriptManager1" Runat="server" 
+                      AsyncPostBackTimeout="6000000">
+        </telerik:RadScriptManager>
+   
+     <section class="content">
+
+          <!-- SELECT2 EXAMPLE -->
+            <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Executive Dashboard</h3>
+              
+            </div><!-- /.box-header -->
+            <div class="box-body">
+          <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" Runat="server" 
+        Skin="Forest">
+    </telerik:RadAjaxLoadingPanel>
+                <asp:Button ID="Button1" runat="server"  Text="Return" />
+    <br />
+    <br />
+                <div class="row">
+            <div class="col-md-3">
+              <!-- small box -->
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                  <h2>Registered Accts</h2>
+                  <h2>0</h2>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+             <div class="col-md-3">
+              <!-- small box -->
+              <div class="small-box bg-green">
+                <div class="inner">
+                  <h2>Total Loans</h2>
+                  <h2>0</h2>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+             <div class="col-md-3">
+              <!-- small box -->
+              <div class="small-box bg-yellow">
+                <div class="inner">
+                  <h2>Active Loans</h2>
+                  <h2>0</h2>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+           <div class="col-md-3">
+              <!-- small box -->
+              <div class="small-box bg-red">
+                <div class="inner">
+                  <h2>Loans Today</h2>
+                  <h2>0</h2>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              </div>
+            </div><!-- ./col -->
+          </div><!-- /.row -->
+    
+                </div>
+                 <div class="box-footer">
+             <p>
+                    
+                      &nbsp;</p>                
+            </div>
+                </div>
+        </section>
+          
+    
+        <br />
+     
+         <div class="col-md-7">
+                      <!-- TABLE: LATEST ORDERS -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Registration</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="table-responsive">
+                    
+                  </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                  <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-left">View All</a>
+                 
+                </div><!-- /.box-footer -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+               
+         <div class="col-md-3">
+              <!-- Info Boxes Style 2 -->
+              <div class="info-box bg-yellow">
+                <span class="info-box-icon"><i class="ion ion-ios-pie-graph-outline"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Contributions</span>
+                  <span class="info-box-number">0</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 50%"></div>
+                  </div>
+                  <span class="progress-description">
+                    50% Increase in 30 Days
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+              <div class="info-box bg-green">
+                <span class="info-box-icon"><i class="ion ion-ios-fa-money-outline"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Loan Granted</span>
+                  <span class="info-box-number">₦0</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                  <span class="progress-description">
+                    .
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+              <div class="info-box bg-red">
+                <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Outstanding Loans</span>
+                  <span class="info-box-number">0</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 70%"></div>
+                  </div>
+                  <span class="progress-description">
+                    70% with respect to total borrowers
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+              <div class="info-box bg-aqua">
+                <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+                <div class="info-box-content">
+                  <span class="info-box-text">Total Number of Borrowing Members</span>
+                  <span class="info-box-number">0</span>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 40%"></div>
+                  </div>
+                  <span class="progress-description">
+                    40% with respect to total deposit members
+                  </span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+           </div>
+              <div class="col-md-6">
+                    
+              </div>
+          
+           <div class="row">
+         <div class="col-md-6">
+                    
+                 </div>
+                <div class="col-md-6">
+                    
+                  </div>
+              </div>
+          <div class="row">
+                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        
+                        SelectCommand="SELECT [ROA], [ROE], [NET_MARGIN] 'NET MARGIN', [OPERATIONALSUFFICIENCY] 'OPERATIONAL SUFFICIENCY' FROM [Tbl_Dashboard_DW1]">
+                    </asp:SqlDataSource>
+               
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        
+                        SelectCommand="select CapitalAsset 'Capital/Asset Ratio',Deposit_To_Loans 'Deposit To Loans',
+Deposit_To_Assets 'Deposit To Assets',Loan_To_Assets 'Loan Portfolio To Total Assets' from Tbl_Dashboard_DW1 ">
+                    </asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        SelectCommand="SELECT [PAR_30] 'PAR &gt; 30', [PAR_90] 'PAR &gt; 90' FROM [Tbl_Dashboard_DW1]">
+                    </asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSource4" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        SelectCommand="SELECT [Jan], [Feb], [Mar] FROM [Tbl_Dashboard_LoanPortfolio]">
+                    </asp:SqlDataSource>
+                </div>
+   </form>
+        </body>
+</html>

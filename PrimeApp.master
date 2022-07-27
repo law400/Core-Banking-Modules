@@ -1,0 +1,714 @@
+<%@ Master Language="VB" CodeFile="PrimeApp.master.vb" Inherits="PrimeApp" %>
+<%@ Register src="menu.ascx" tagname="menu" tagprefix="uc1" %>
+<%@ Register src="Alertl.ascx" tagname="Alertl" tagprefix="uc2" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>UCP Core Portal</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <style type="text/css">
+        .ImgWidth {
+            Width: 150px;
+            margin-top: 20px;
+        }
+             body
+        {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+        .modalBackground
+        {
+            background-color: Black;
+            filter: alpha(opacity=60);
+            opacity: 0.6;
+        }
+        .modalPopup
+        {
+            background-color: #FFFFFF;
+            width: 300px;
+            border: 3px solid #0DA9D0;
+            border-radius: 12px;
+            padding: 0;
+        }
+        .modalPopup .header
+        {
+            background-color: #2FBDF1;
+            height: 30px;
+            color: White;
+            line-height: 30px;
+            text-align: center;
+            font-weight: bold;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        .modalPopup .body
+        {
+            padding:10px;
+            min-height: 50px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .modalPopup .footer
+        {
+            padding: 6px;
+        }
+        .modalPopup .yes, .modalPopup .no
+        {
+            height: 23px;
+            color: White;
+            line-height: 23px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .modalPopup .yes
+        {
+            background-color: #2FBDF1;
+            border: 1px solid #0DA9D0;
+        }
+        .modalPopup .no
+        {
+            background-color: #9F9F9F;
+            border: 1px solid #5C5C5C;
+        }
+        
+    </style>
+    <script  type="text/javascript" >
+        function calendarPicker(strTxtRef) {
+            window.open('./Controls/Calendar.aspx?field=' + strTxtRef + '', 'calendarPopup', 'titlebar=no,left=50,top=100,width=300,height=250,resizable=no');
+        }
+        function calculator(strTxtRef) {
+            window.open('./Controls/calculator.aspx?field=' + strTxtRef + '', 'calendarPopup', 'titlebar=yes,left=50,top=100,width=400,height=550,resizable=no');
+        }
+
+        function accountPicker(strTxtRef) {
+            window.open('./AccountEnquiry.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=650,height=500,resizable=no');
+        }
+
+        function accountGLPicker(strTxtRef) {
+            window.open('./GLCustEnquiry.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=650,height=600,resizable=no');
+        }
+        function glaccountPicker(strTxtRef) {
+            window.open('./glEnquiry.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=550,height=600,resizable=no');
+        }
+        function loandetail(strTxtRef) {
+            window.open('./loandetail.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=800,top=100,width=500,height=700,resizable=no');
+        }
+        function TDdetail(strTxtRef) {
+            window.open('./TDdetail.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=800,top=100,width=500,height=700,resizable=no');
+        }
+
+
+
+        function Chgdetail(strTxtRef) {
+            window.open('./Chargedet1.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=-10,top=50,width=400,height=500,resizable=no');
+        }
+
+        function acctdetail(strTxtRef) {
+            window.open('./AccountHist.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=650,height=500,resizable=no');
+        }
+
+        function Chgdetail2(strTxtRef) {
+            window.open('./Chargedet1.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=900,top=50,width=400,height=300,resizable=no');
+        }
+
+        function staff(strTxtRef) {
+            window.open('./staffenqry.aspx?field=' + strTxtRef + '', 'staffPopup', 'titlebar=no,left=50,top=100,width=700,height=400,resizable=no');
+        }
+
+
+        function customer(strTxtRef) {
+            window.open('./custenquiry.aspx?field=' + strTxtRef + '', 'staffPopup', 'titlebar=no,scroll=true,left=50,top=100,width=700,height=600,resizable=no');
+        }
+        function customer2(strTxtRef) {
+            window.open('./custenquiry2.aspx?field=' + strTxtRef + '', 'staffPopup', 'titlebar=no,scroll=true,left=50,top=100,width=700,height=600,resizable=no');
+        }
+        function authPicker2(strTxtRef) {
+            window.open('./Authorise.aspx?field=' + strTxtRef + '', 'authorisePopup', 'titlebar=no,left=50,top=100,width=650,height=450,resizable=no');
+        }
+
+        function interestPicker(strTxtRef) {
+            window.open('./interesthist.aspx?id=' + strTxtRef + '', 'interestPopup', 'titlebar=no,left=50,top=100,width=650,height=450,resizable=no');
+        }
+
+        function authPicker(strTxtRef) {
+            window.open('./Override.aspx?field=' + strTxtRef + '', 'authorisePopup', 'titlebar=no,left=50,top=100,width=250,height=250,resizable=no');
+        }
+
+
+        function payPicker(strTxtRef) {
+            window.open('./pointing.aspx?field=' + strTxtRef + '', 'authorisePopup', 'titlebar=no,left=50,top=100,width=250,height=250,resizable=no');
+        }
+
+        var nHist = window.history.length;
+        if (window.history[nHist] != window.location)
+            window.history.forward();
+
+        function getCurrentTime() {
+            var now = new Date();
+            var mySecs = now.getSeconds();
+            var curHour = now.getHours();
+            var curMin = now.getMinutes();
+            var day = now.getDay();
+            var date = now.getDate();
+            var year = now.getFullYear();
+            var month = now.getMonth();
+            var days = new Array();
+            days[0] = "Sunday";
+            days[1] = "Monday";
+            days[2] = "Tuesday";
+            days[3] = "Wednesday";
+            days[4] = "Thursday";
+            days[5] = "Friday";
+            days[6] = "Saturday";
+            var months = new Array();
+            months[0] = "January";
+            months[1] = "February";
+            months[2] = "March";
+            months[3] = "April";
+            months[4] = "May";
+            months[5] = "June";
+            months[6] = "July";
+            months[7] = "August";
+            months[8] = "September";
+            months[9] = "October";
+            months[10] = "November";
+            months[11] = "December";
+            var suffix = "AM";
+
+            if (mySecs < 10) {
+                mySecs = "0" + mySecs;
+            }
+
+            if (curMin < 10) {
+                curMin = "0" + curMin;
+            }
+
+            if (curHour == 12 && curMin >= 1) {
+                suffix = "PM";
+            }
+
+            if (curHour == 24 && curMin >= 1) {
+                curHour -= 12;
+                suffix = "AM";
+            }
+
+            if (curHour > 12) {
+                curHour -= 12;
+                suffix = "PM";
+            }
+
+            document.getElementById('time').innerHTML = (days[day] + ", " + date + " " + (months[month]) + " " + year + " " + curHour + ":" + curMin + ":" + mySecs + " " + suffix);
+
+        }
+
+        function Notify(msg, title, type, clear, pos, sticky) {
+            //        toastr.options.positionClass = "toast-bottom-right";
+            //        toastr.options.positionClass = "toast-bottom-left";
+            //        toastr.options.positionClass = "toast-top-right";
+            //        toastr.options.positionClass = "toast-top-left";
+            //        toastr.options.positionClass = "toast-bottom-full-width";
+            //        toastr.options.positionClass = "toast-top-full-width";
+            //        options = {
+            //            tapToDismiss: true,
+            //            toastClass: 'toast',
+            //            containerId: 'toast-container',
+            //            debug: false,
+            //            fadeIn: 300,
+            //            fadeOut: 1000,
+            //            extendedTimeOut: 1000,
+            //            iconClass: 'toast-info',
+            //            positionClass: 'toast-top-right',
+            //            timeOut: 5000, // Set timeOut to 0 to make it sticky
+            //            titleClass: 'toast-title',
+            //            messageClass: 'toast-message' }
+
+
+            if (clear == true) {
+                toastr.clear();
+            }
+            if (sticky == true) {
+                toastr.tapToDismiss = true;
+                toastr.timeOut = 10000;
+            }
+
+            toastr.options.onclick = function () {
+                //alert('You can perform some custom action after a toast goes away');
+            }
+            //"toast-top-left";
+            toastr.options.positionClass = pos;
+            if (type.toLowerCase() == 'info') {
+                toastr.options.timeOut = 1000;
+                toastr.tapToDismiss = true;
+                toastr.info(msg, title);
+            }
+            if (type.toLowerCase() == 'success') {
+                toastr.options.timeOut = 1500;
+                toastr.success(msg, title);
+            }
+            if (type.toLowerCase() == 'warning') {
+                toastr.options.timeOut = 3000;
+                toastr.warning(msg, title);
+            }
+            if (type.toLowerCase() == 'error') {
+                toastr.options.timeOut = 10000;
+                toastr.error(msg, title);
+            }
+        }
+     
+        //function load() {
+        //    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(Notify);
+        //}
+
+         function SessionExpireAlert(timeout) {
+            var seconds = timeout / 1000;
+            document.getElementsByName("secondsIdle").innerHTML = seconds;
+            document.getElementsByName("seconds").innerHTML = seconds;
+            setInterval(function () {
+                seconds--;
+                document.getElementById("seconds").innerHTML = seconds;
+                document.getElementById("secondsIdle").innerHTML = seconds;
+            }, 1000);
+            setTimeout(function () {
+                //Show Popup before 20 seconds of timeout.
+                $find("mpeTimeout").show();
+            }, timeout - 20 * 1000);
+            setTimeout(function () {
+                window.location = "SignOut.aspx";
+            }, timeout);
+        };
+        function ResetSession() {
+            //Redirect to refresh Session.
+            window.location = window.location.href;
+        }
+
+    </script>
+
+    
+        <link href="template/css/style.default.css" rel="stylesheet"/>
+        <link href="template/css/morris.css" rel="stylesheet"/>
+        <link href="template/css/select2.css" rel="stylesheet" />
+        <!-- Theme style -->
+     <link rel="stylesheet" href="dist/font-awesome.min.css"/>
+        <link rel="stylesheet" href="dist/font-awesome.css"/>
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="dist/ionicons.min.css"/>
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"/>
+     <link rel="stylesheet" href="dist/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="dist/ionicons.min.css"/>
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"/>
+     <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
+   
+    <!-- Theme style -->
+     <link rel="stylesheet" href="dist/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="dist/ionicons.min.css"/>
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"/>
+
+   <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
+   
+    <!-- Theme style -->
+     <link rel="stylesheet" href="dist/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="dist/ionicons.min.css"/>
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"/>
+    <%-- <link  href="css/bootstrap.css" rel="stylesheet"/>--%>
+     <link  href="css/css/bootstrap-cerulean.css" rel="stylesheet"/>
+   <link href="css/jquery.dataTables_themeroller.css" rel="stylesheet"/>
+    <link href="css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="css/jquery.dataTables.css" rel="stylesheet"/>
+
+
+   
+<link href="css/dataTables.foundation.css" rel="stylesheet"/>
+<link href="css/dataTables.foundation.min.css" rel="stylesheet"/>
+    <link href="css/dataTables.jqueryui.css" rel="stylesheet"/>
+ <link href="css/dataTables.jqueryui.min.css " rel="stylesheet"/>
+
+
+
+
+    <link rel="stylesheet" href="dist/font-awesome.css"/>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet"/>
+    <link href="css/charisma-app.css" rel="stylesheet"/>
+    <link href="css/jquery-ui-1.8.21.custom.css" rel="stylesheet"/>
+    
+    <link href="css/uniform.default.css" rel="stylesheet"/>
+    <link href="css/colorbox.css" rel="stylesheet"/>
+    <link href="css/jquery.cleditor.css" rel="stylesheet"/>
+    <link href="css/jquery.noty.css" rel="stylesheet"/>
+    <link href="css/noty_theme_default.css" rel="stylesheet"/>
+    <link href="css/elfinder.min.css" rel="stylesheet"/>
+    
+    <link href="css/opa-icons.css" rel="stylesheet"/>
+    <link href="css/uploadify.css" rel="stylesheet"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"/>
+
+    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"  />
+
+
+        <link rel="stylesheet" type="text/css" href="css/buttons.jqueryui.min.css"  />
+            <link rel="stylesheet" type="text/css" href="css/buttons.jqueryui.css"  />
+
+
+    
+        <link rel="stylesheet" type="text/css" href="css/buttons.semanticui.css"  />
+            <link rel="stylesheet" type="text/css" href="css/buttons.semanticui.min.css"  />
+
+    
+        <link rel="stylesheet" type="text/css" href="css/buttons.foundation.css"  />
+            <link rel="stylesheet" type="text/css" href="css/buttons.foundation.min.css"  />
+
+    
+        <link rel="stylesheet" type="text/css" href="css/buttons.dataTables.css"  />
+            <link rel="stylesheet" type="text/css" href="css/buttons.dataTables.min.css"  />
+
+    
+        <link rel="stylesheet" type="text/css" href="css/buttons.bootstrap.css"  />
+            <link rel="stylesheet" type="text/css" href="css/buttons.bootstrap.min.css"  />
+
+    
+        <link rel="stylesheet" type="text/css" href="css/buttons.bootstrap4.css"  />
+            <link rel="stylesheet" type="text/css" href="css/buttons.bootstrap4.min.css"  />
+
+
+
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"/>
+
+<link href="css/toastr.css"
+    rel="stylesheet" />
+
+<script src="js/toastr.js"
+    type="text/javascript"></script>
+   
+    <asp:ContentPlaceHolder id="head" runat="server">
+
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server" autocomplete="off">
+   <%-- <asp:ScriptManager runat="server" ID="ScriptManager1">
+
+    </asp:ScriptManager>--%>
+        
+  
+
+    <%--<div class="form-group">
+                    <uc2:alertl ID="Alertl1" runat="server" />
+                    </div>--%>
+
+    <header>
+            <div class="headerwrapper">
+                <div class="header-left">
+                    <a href="index.html" class="logo">
+                        <%--<img src="template/images/fin2.PNG" alt="" />--%> 
+                    </a>
+                    <div class="pull-right">
+                        <a href="#" class="menu-collapse">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                </div><!-- header-left -->
+                
+                <div class="header-right">
+                    
+                    <div class="pull-right" navigateurl="Upload/UCP_User_Guide.pdf">
+                        
+                       <%-- <form class="form form-search" action="search-results.html">
+                            <input type="search" class="form-control" placeholder="Search" />
+                        </form>--%>
+                        
+<%--                        <div class="btn-group btn-group-list btn-group-notification">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-bell-o"></i>
+                              <span class="badge">5</span>
+                            </button>
+                            <div class="dropdown-menu pull-right">
+                                <a href="#" class="link-right"><i class="fa fa-search"></i></a>
+                                <h5>Notification</h5>
+                                <ul class="media-list dropdown-list">
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user1.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Nusja Nawancali</strong> likes a photo of you
+                                          <small class="date"><i class="fa fa-thumbs-up"></i> 15 minutes ago</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user2.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Weno Carasbong</strong> shared a photo of you in your <strong>Mobile Uploads</strong> album.
+                                          <small class="date"><i class="fa fa-calendar"></i> July 04, 2014</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user3.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Venro Leonga</strong> likes a photo of you
+                                          <small class="date"><i class="fa fa-thumbs-up"></i> July 03, 2014</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user4.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Nanterey Reslaba</strong> shared a photo of you in your <strong>Mobile Uploads</strong> album.
+                                          <small class="date"><i class="fa fa-calendar"></i> July 03, 2014</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user1.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Nusja Nawancali</strong> shared a photo of you in your <strong>Mobile Uploads</strong> album.
+                                          <small class="date"><i class="fa fa-calendar"></i> July 02, 2014</small>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="dropdown-footer text-center">
+                                    <a href="#" class="link">See All Notifications</a>
+                                </div>
+                            </div><!-- dropdown-menu -->
+                        </div><!-- btn-group -->--%>
+                        
+<%--                        <div class="btn-group btn-group-list btn-group-messages">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge">2</span>
+                            </button>
+                            <div class="dropdown-menu pull-right">
+                                <a href="#" class="link-right"><i class="fa fa-plus"></i></a>
+                                <h5>New Messages</h5>
+                                <ul class="media-list dropdown-list">
+                                    <li class="media">
+                                        <span class="badge badge-success">New</span>
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user1.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Nusja Nawancali</strong>
+                                          <p>Hi! How are you?...</p>
+                                          <small class="date"><i class="fa fa-clock-o"></i> 15 minutes ago</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <span class="badge badge-success">New</span>
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user2.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Weno Carasbong</strong>
+                                          <p>Lorem ipsum dolor sit amet...</p>
+                                          <small class="date"><i class="fa fa-clock-o"></i> July 04, 2014</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user3.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Venro Leonga</strong>
+                                          <p>Do you have the time to listen to me...</p>
+                                          <small class="date"><i class="fa fa-clock-o"></i> July 03, 2014</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user4.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Nanterey Reslaba</strong>
+                                          <p>It might seem crazy what I'm about to say...</p>
+                                          <small class="date"><i class="fa fa-clock-o"></i> July 03, 2014</small>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <img class="img-circle pull-left noti-thumb" src="template/images/photos/user1.png" alt=""/>
+                                        <div class="media-body">
+                                          <strong>Nusja Nawancali</strong>
+                                          <p>Hey I just met you and this is crazy...</p>
+                                          <small class="date"><i class="fa fa-clock-o"></i> July 02, 2014</small>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="dropdown-footer text-center">
+                                    <a href="#" class="link">See All Messages</a>
+                                </div>
+                            </div><!-- dropdown-menu -->
+                        </div><!-- btn-group -->--%>
+                        
+                        <div class="btn-group btn-group-option">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-caret-down"></i>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                              <li><asp:HyperLink ID="HypHelp" runat="server" Target="_blank" NavigateUrl="~/Upload/UCP_User_Guide.pdf"><i class="glyphicon glyphicon-question-sign"></i> Help</asp:HyperLink></li>
+                              <li class="divider"></li>
+                              <li><asp:HyperLink NavigateUrl="~/Signout.aspx" Text="Sign Out" runat="server" />
+                              </li>
+                            </ul>
+                        </div><!-- btn-group -->
+                        
+                    </div><!-- pull-right -->
+                    
+                </div><!-- header-right -->
+                
+            </div><!-- headerwrapper -->
+        </header>
+        
+        <section>
+            <div class="mainwrapper">
+
+                <div class="leftpanel">
+                    <div class="media profile-left">
+                        <%--<a class="pull-left profile-thumb" href="profile.html">--%>
+                        <asp:Label ID="Label1" runat="server" ></asp:Label>
+                             <%--  <asp:Image ID="ImgLogo" runat="server" CssClass="ImgWidth" />--%>
+                         <img src="<%= ProfileImage %>" CssClass="ImgWidth" Width="120px" />
+                       <%-- </a>--%>
+                        <div class="media-body">
+                            <h4 class="media-heading"></h4>
+                            <small class="text-muted"></small>
+                        </div>
+                    </div><!-- media -->
+                     
+                    <h5 class="leftpanel-title"> <asp:Label ID="LblCoop" runat="server" Font-Bold="True" Font-Size="Medium" ForeColor="#0066CC"></asp:Label></h5>
+                    <ul class="nav nav-pills nav-stacked">
+                  
+               <li class="active">
+                  
+                    <asp:HyperLink NavigateUrl="~/Dashboard.aspx" Text="Dashboard" runat="server"><i class="fa fa-home"></i><span>Dashboard</span></asp:HyperLink> 
+               </li>
+                       
+          <asp:Repeater ID="rptMenu" runat="server" OnItemDataBound="rptMenu_ItemDataBound">
+              <ItemTemplate>
+                  <li class="parent" runat="server" id="parentli"><a href="#">
+                   <i class="<%#Eval("Fa_Fa_Icon")%>"></i> <span runat="server" id="spanid">  <%#Eval("Menu_Name")%></span></a>
+                  <ul class="children">
+                      <asp:Repeater ID="rptChildMenu" runat="server">
+                          <ItemTemplate>
+                              <li>
+                                 <%-- <a href="<%#Eval("Url")%>">
+                                  <%#Eval("Menu_Name")%></a>--%>
+
+                                  <asp:HyperLink NavigateUrl='<%#Eval("Url")%>' Text='<%#Eval("Menu_Name")%>' runat="server" />
+                              </li>
+                          </ItemTemplate>
+                      </asp:Repeater>
+                  </ul>
+                 </li>
+              </ItemTemplate>
+          </asp:Repeater>
+      </ul>
+                     
+                </div><!-- leftpanel -->
+                
+                <div class="mainpanel">
+                    <div class="pageheader">
+                        <div class="media">
+                            <div class="pageicon pull-left">
+                                <i class="fa fa-home"></i>
+                            </div>
+                            <div class="media-body">
+                                <ul class="breadcrumb">
+                                    <li>
+                                       
+                                     <asp:HyperLink NavigateUrl="~/Dashboard.aspx" Text="Dashboard" runat="server"><i class="glyphicon glyphicon-home"></i></asp:HyperLink> 
+                                    </li>
+                                    <li>Dashboard</li>
+                                </ul>
+                              
+                              <h4><asp:Label ID="lbldisplay" runat="server"></asp:Label></h4>
+                          
+                               
+                            </div>
+                        </div><!-- media -->
+                    </div><!-- pageheader -->
+                    
+                    <div class="contentpanel">
+                          <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+</asp:ToolkitScriptManager>
+  <h3 runat="server" Visible="False">Session Idle:&nbsp;<span id="secondsIdle"></span>&nbsp;seconds.</h3>
+                        <asp:LinkButton ID="lnkFake" runat="server" />
+                        <asp:ModalPopupExtender ID="mpeTimeout" BehaviorID ="mpeTimeout" runat="server" PopupControlID="pnlPopup" TargetControlID="lnkFake"
+                                                OkControlID="btnYes" CancelControlID="btnNo" BackgroundCssClass="modalBackground" OnOkScript = "ResetSession()">
+                        </asp:ModalPopupExtender>
+                        <asp:Panel ID="pnlPopup" runat="server" CssClass="modalPopup" Style="display: none">
+                            <div class="header">
+                                Session Expiring!
+                            </div>
+                            <div class="body">
+                                Your Session will expire in&nbsp;<span id="seconds"></span>&nbsp;seconds.<br />
+                                Do you want to reset?
+                            </div>
+                            <div class="footer" align="right">
+                                <asp:Button ID="btnYes" runat="server" Text="Yes" CssClass="yes" />
+                                <asp:Button ID="btnNo" runat="server" Text="No" CssClass="no" />
+                            </div>
+                        </asp:Panel>
+
+                 <asp:Label ID="Label3" runat="server" Visible="false"></asp:Label>
+                         <asp:Label ID="Label4" runat="server" Visible="false"></asp:Label>
+                       <div>
+                         
+                        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+                           </div>
+                         <div class ="box-footer">
+	           <%--Copyright &copy; <%= DateTime.Now.Year %>  <a href= "http://www.cwg-plc.com" target= "_blank" > CWG PLC</a>. All rights reserved.<span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=T6ZbFNzPFss9I0MvbZjlav0bMctwnFhBm5rEhKxv9hf4rOWPPUnjUxwf6EMh"></script></span>--%>
+            </div>
+    
+                    </div><!-- contentpanel -->
+                    
+                </div><!-- mainpanel -->
+            </div><!-- mainwrapper -->
+        </section>
+
+
+<%--        <script src="template/js/jquery-1.11.1.min.js"></script>--%>
+
+        <script src="template/js/jquery-migrate-1.2.1.min.js"></script>
+        <script src="template/js/bootstrap.min.js"></script>
+        <script src="template/js/modernizr.min.js"></script>
+        <script src="template/js/pace.min.js"></script>
+        <script src="template/js/retina.min.js"></script>
+        <script src="template/js/jquery.cookies.js"></script>
+        
+        <script src="template/js/flot/jquery.flot.min.js"></script>
+        <script src="template/js/flot/jquery.flot.resize.min.js"></script>
+        <script src="template/js/flot/jquery.flot.spline.min.js"></script>
+        <script src="template/js/jquery.sparkline.min.js"></script>
+        <script src="template/js/morris.min.js"></script>
+        <script src="template/js/raphael-2.1.0.min.js"></script>
+        <script src="template/js/bootstrap-wizard.min.js"></script>
+        <script src="template/js/select2.min.js"></script>
+
+        <script src="template/js/custom.js"></script>
+        <script src="template/js/dashboard.js"></script>
+
+        <script src="../Assets/toastr.min.js"></script>
+        <script src="../Assets/script.js"></script>
+        <link href="../Assets/toastr.min.css" rel="stylesheet" />
+    </form>
+	  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5aaa343c4b401e45400dc078/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+</html>

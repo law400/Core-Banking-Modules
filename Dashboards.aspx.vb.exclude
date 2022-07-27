@@ -1,0 +1,41 @@
+﻿'Imports Infragistics.UltraGauge
+'Imports Infragistics.UltraGauge.Resources
+Partial Class Dashboards
+    Inherits System.Web.UI.Page
+    Sub LoadDashboard()
+        Dim Qry As String = ""
+        Qry = "Select * from Tbl_Dashboard_DW1"
+        If con.SqlDs(Qry).Tables(0).Rows.Count > 0 Then
+            drx = con.SqlDs(Qry).Tables(0).Rows(0)
+            'Dim needle1 As RadialGaugeNeedle = DirectCast(DirectCast(Me.UltraGauge1.Gauges(0), RadialGauge).Scales(4).Markers(0), RadialGaugeNeedle)
+            'Dim needle2 As RadialGaugeNeedle = DirectCast(DirectCast(Me.UltraGauge2.Gauges(0), RadialGauge).Scales(4).Markers(0), RadialGaugeNeedle)
+            'Dim needle3 As RadialGaugeNeedle = DirectCast(DirectCast(Me.UltraGauge3.Gauges(0), RadialGauge).Scales(4).Markers(0), RadialGaugeNeedle)
+            'Dim needle4 As RadialGaugeNeedle = DirectCast(DirectCast(Me.UltraGauge4.Gauges(0), RadialGauge).Scales(4).Markers(0), RadialGaugeNeedle)
+            'Dim Needle1 As RadialGauge = Me.UltraGauge5.Gauges(0)
+            'Dim Needle2 As RadialGauge = Me.UltraGauge4.Gauges(0)
+            'Dim Needle3 As RadialGauge = Me.UltraGauge1.Gauges(0)
+            'Dim Needle4 As RadialGauge = Me.UltraGauge2.Gauges(0)
+
+            'Needle1.Scales(0).Markers(0).Value = drx.Item("PAR_30")
+            'Needle2.Scales(0).Markers(0).Value = drx.Item("ROA")
+            'Needle3.Scales(0).Markers(0).Value = drx.Item("NET_MARGIN")
+            'Needle4.Scales(0).Markers(0).Value = drx.Item("ROE")
+            'needle1.Value = drx.Item("ROA")
+            'needle2.Value = drx.Item("ROE")
+            'needle3.Value = drx.Item("PAR_30")
+
+            'lbl_LoanOutstanding.Text = drx.Item("LoanOutstanding")
+            'lbl_ActiveBorrow.Text = drx.Item("Active_Borrowers")
+            'lblLoanPaid.Text = drx.Item("LoanRepaySysDate")
+
+        End If
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        LoadDashboard()
+    End Sub
+
+    Protected Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Response.Redirect("~/Home.aspx")
+    End Sub
+End Class

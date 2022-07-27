@@ -1,0 +1,273 @@
+BODY {
+	PADDING-BOTTOM: 20px; PADDING-LEFT: 20px; PADDING-RIGHT: 20px; FONT: 12px/17px Arial, Helvetica, sans-serif; BACKGROUND: #ccc; COLOR: #333; PADDING-TOP: 40px
+}
+FIELDSET {
+	padding: 10px;
+    border-bottom: 1px solid #666661;
+    border-left: 1px solid #fff;
+WIDTH: 503px; 
+    MARGIN-BOTTOM: 36px; BACKGROUND: #f2f2e6; BORDER-TOP: #fff 1px solid; BORDER-RIGHT: #666661 1px solid;
+}
+INPUT {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT: 12px/12px Arial, Helvetica, sans-serif; PADDING-TOP: 0px
+}
+TEXTAREA {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT: 12px/12px Arial, Helvetica, sans-serif; PADDING-TOP: 0px
+}
+SELECT {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT: 12px/12px Arial, Helvetica, sans-serif; PADDING-TOP: 0px
+}
+FIELDSET.action {
+	BORDER-BOTTOM-COLOR: #797c80; MARGIN-TOP: -20px; BORDER-TOP-COLOR: #e5e5e5; BACKGROUND: #9da2a6; BORDER-RIGHT-COLOR: #797c80; BORDER-LEFT-COLOR: #e5e5e5
+}
+LEGEND {
+	BORDER-BOTTOM: #505014 1px solid; BORDER-LEFT: #e5e5c3 1px solid; PADDING-BOTTOM: 0px; MARGIN: -26px 0px 0px -11px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FONT: bold 17px/21px Calibri, Arial, Helvetica, sans-serif; BACKGROUND: #bfbf30; COLOR: #fff; BORDER-TOP: #e5e5c3 1px solid; BORDER-RIGHT: #505014 1px solid; PADDING-TOP: 0px
+}
+LABEL {
+	COLOR: #666; FONT-SIZE: 11px; FONT-WEIGHT: bold
+}
+LABEL.opt {
+	FONT-WEIGHT: normal
+}
+DL {
+	CLEAR: both
+}
+DT {
+	TEXT-ALIGN: right; LINE-HEIGHT: 25px; MARGIN: 0px 10px 10px 0px; WIDTH: 90px; FLOAT: left
+}
+DD {
+	LINE-HEIGHT: 25px; MARGIN: 0px 0px 10px; WIDTH: 475px; FLOAT: left
+}
+#footer {
+	FONT-SIZE: 11px
+}
+#container {
+	MARGIN: 0px auto; WIDTH: 700px
+}
+.NFText {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; FONT: 12px/15px Arial, Helvetica, sans-serif; BACKGROUND: none transparent scroll repeat 0% 0%; VERTICAL-ALIGN: middle; BORDER-TOP: medium none; BORDER-RIGHT: medium none
+}
+.NFTextCenter {
+	PADDING-BOTTOM: 3px; LINE-HEIGHT: 15px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: url(img/input.png) repeat-x 0px 0px; FLOAT: left; HEIGHT: 15px; PADDING-TOP: 3px
+}
+.NFTextLeft {
+	WIDTH: 7px; FLOAT: left; HEIGHT: 21px; VERTICAL-ALIGN: middle
+}
+.NFTextRight {
+	WIDTH: 7px; FLOAT: left; HEIGHT: 21px; VERTICAL-ALIGN: middle
+}
+.NFTextLeft {
+	BACKGROUND: url(img/input-left.png) no-repeat 0px 0px
+}
+.NFTextRight {
+	BACKGROUND: url(img/input-right.png) no-repeat 0px 0px
+}
+.NFRadio {
+	Z-INDEX: 2; BORDER-BOTTOM: transparent 1px solid; POSITION: absolute; BORDER-LEFT: transparent 1px solid; WIDTH: 13px; DISPLAY: block; BACKGROUND: url(img/radio.png) no-repeat 0px 0px; HEIGHT: 13px; BORDER-TOP: transparent 1px solid; CURSOR: pointer; BORDER-RIGHT: transparent 1px solid
+}
+.NFCheck {
+	Z-INDEX: 2; BORDER-BOTTOM: transparent 1px solid; POSITION: absolute; BORDER-LEFT: transparent 1px solid; WIDTH: 12px; BACKGROUND: url(img/checkbox.png) no-repeat 0px 0px; HEIGHT: 12px; BORDER-TOP: transparent 1px solid; CURSOR: pointer; BORDER-RIGHT: transparent 1px solid
+}
+.NFButton {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; PADDING-BOTTOM: 0px; TEXT-TRANSFORM: uppercase; PADDING-LEFT: 2px; WIDTH: auto; PADDING-RIGHT: 2px; FONT: bold 10px/26px Tahoma, Arial, Helvetica, sans-serif; BACKGROUND: url(img/button.png) repeat-x 0px 0px; LETTER-SPACING: 1px; HEIGHT: 26px; COLOR: #fff; VERTICAL-ALIGN: middle; BORDER-TOP: medium none; CURSOR: pointer; BORDER-RIGHT: medium none; PADDING-TOP: 0px
+}
+.NFButtonLeft {
+	WIDTH: 6px; HEIGHT: 26px; VERTICAL-ALIGN: middle
+}
+.NFButtonRight {
+	WIDTH: 6px; HEIGHT: 26px; VERTICAL-ALIGN: middle
+}
+.NFButtonLeft {
+	BACKGROUND: url(img/button-left.png) no-repeat 0px 0px
+}
+.NFButtonRight {
+	BACKGROUND: url(img/button-right.png) no-repeat 0px 0px
+}
+.NFTextarea {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; MARGIN: 0px; FONT: 12px/12px Arial, Helvetica, sans-serif; BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP: medium none; BORDER-RIGHT: medium none
+}
+.NFTextareaTop {
+	PADDING-RIGHT: 10px; FLOAT: none; HEIGHT: 5px; CLEAR: both
+}
+.NFTextareaBottom {
+	PADDING-RIGHT: 10px; FLOAT: none; HEIGHT: 5px; CLEAR: both
+}
+.NFTextareaTop {
+	BACKGROUND: url(img/textarea-tr.png) no-repeat 100% 0px
+}
+.NFTextareaBottom {
+	MARGIN-BOTTOM: 5px; BACKGROUND: url(img/textarea-br.png) no-repeat 100% 0px
+}
+.NFTextareaTopLeft {
+	WIDTH: 5px; HEIGHT: 5px
+}
+.NFTextareaBottomLeft {
+	WIDTH: 5px; HEIGHT: 5px
+}
+.NFTextareaTopLeft {
+	BACKGROUND: url(img/textarea-tl.png) #f2f2e6 no-repeat 0px 0px
+}
+.NFTextareaBottomLeft {
+	BACKGROUND: url(img/textarea-bl.png) #f2f2e6 no-repeat 0px 0px
+}
+.NFTextareaLeft {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFTextareaRight {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFTextareaLeftH {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFTextareaRightH {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFTextareaLeft {
+	WIDTH: 5px
+}
+.NFTextareaLeftH {
+	WIDTH: 5px
+}
+.NFTextareaLeft {
+	BACKGROUND: url(img/textarea-l-off.png) repeat-y 0px 0px
+}
+.NFTextareaLeftH {
+	BACKGROUND: url(img/textarea-l-over.png) repeat-y 0px 0px
+}
+.NFTextareaRight {
+	PADDING-BOTTOM: 0px; PADDING-RIGHT: 5px
+}
+.NFTextareaRightH {
+	PADDING-BOTTOM: 0px; PADDING-RIGHT: 5px
+}
+.NFTextareaRight {
+	BACKGROUND: url(img/textarea-r-off.png) repeat-y 100% 0px
+}
+.NFTextareaRightH {
+	BACKGROUND: url(img/textarea-r-over.png) repeat-y 100% 100%
+}
+.NFFileButton {
+	PADDING-BOTTOM: 0px; WIDTH: 60px; BACKGROUND: url(img/file.png) no-repeat 0px 0px; HEIGHT: 21px; VERTICAL-ALIGN: bottom; CURSOR: pointer
+}
+.NFFile {
+	POSITION: relative; MARGIN-BOTTOM: 5px
+}
+.NFFile INPUT.NFhidden {
+	Z-INDEX: 2; POSITION: relative; TEXT-ALIGN: left; FILTER: alpha(opacity=0); CURSOR: pointer; opacity: 0
+}
+.NFFileNew {
+	Z-INDEX: 1; POSITION: absolute; TOP: 0px; LEFT: 0px
+}
+.NFSelect {
+	BORDER-BOTTOM: transparent 1px solid; POSITION: absolute; BORDER-LEFT: transparent 1px solid; HEIGHT: 21px; BORDER-TOP: transparent 1px solid; BORDER-RIGHT: transparent 1px solid
+}
+.NFSelectLeft {
+	WIDTH: 3px; BACKGROUND: url(img/select-left.png) no-repeat 0px 0px; FLOAT: left; HEIGHT: 21px; VERTICAL-ALIGN: middle
+}
+.NFSelectRight {
+	PADDING-LEFT: 3px; WIDTH: auto; FONT: 12px/21px Arial, Helvetica, sans-serif; BACKGROUND: url(img/select-right.png) no-repeat 100% 0px; HEIGHT: 21px; COLOR: #fff; MARGIN-LEFT: 3px; CURSOR: pointer
+}
+.NFSelectTarget {
+	Z-INDEX: 3; POSITION: absolute; PADDING-BOTTOM: 13px; MARGIN-TOP: 18px; BACKGROUND: none transparent scroll repeat 0% 0%; MARGIN-LEFT: -13px; TOP: 0px; LEFT: 0px
+}
+.NFSelectOptions {
+	Z-INDEX: 4; POSITION: relative; PADDING-BOTTOM: 4px; OVERFLOW-X: hidden; OVERFLOW-Y: auto; LIST-STYLE-TYPE: none; MARGIN-TOP: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT: 11px/13px Arial, Helvetica, sans-serif; BACKGROUND: #707175; COLOR: #fff; MAX-HEIGHT: 200px; MARGIN-LEFT: 16px; TOP: 0px; LIST-STYLE-IMAGE: none; PADDING-TOP: 4px; LEFT: 0px
+}
+.NFSelectOptions LI {
+	PADDING-BOTTOM: 1px
+}
+.NFSelectOptions A {
+	PADDING-BOTTOM: 2px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; DISPLAY: block; BACKGROUND: none transparent scroll repeat 0% 0%; COLOR: #fff; TEXT-DECORATION: none; PADDING-TOP: 2px
+}
+.NFSelectOptions A.NFOptionActive {
+	BACKGROUND: #464646
+}
+.NFSelectOptions A:hover {
+	BACKGROUND: #333
+}
+.NFMultiSelect {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px; BACKGROUND: none transparent scroll repeat 0% 0%; BORDER-TOP: 0px; BORDER-RIGHT: 0px
+}
+.NFMultiSelectTop {
+	PADDING-RIGHT: 10px; FLOAT: none; HEIGHT: 5px; CLEAR: both
+}
+.NFMultiSelectBottom {
+	PADDING-RIGHT: 10px; FLOAT: none; HEIGHT: 5px; CLEAR: both
+}
+.NFMultiSelectTop {
+	BACKGROUND: url(img/textarea-tr.png) no-repeat 100% 0px
+}
+.NFMultiSelectBottom {
+	MARGIN-BOTTOM: 5px; BACKGROUND: url(img/textarea-br.png) no-repeat 100% 0px
+}
+.NFMultiSelectTopLeft {
+	WIDTH: 5px; HEIGHT: 5px
+}
+.NFMultiSelectBottomLeft {
+	WIDTH: 5px; HEIGHT: 5px
+}
+.NFMultiSelectTopLeft {
+	BACKGROUND: url(img/textarea-tl.png) #f2f2e6 no-repeat 0px 0px
+}
+.NFMultiSelectBottomLeft {
+	BACKGROUND: url(img/textarea-bl.png) #f2f2e6 no-repeat 0px 0px
+}
+.NFMultiSelectLeft {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFMultiSelectRight {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFMultiSelectLeftH {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFMultiSelectRightH {
+	PADDING-BOTTOM: 5px; FLOAT: left
+}
+.NFMultiSelectLeft {
+	WIDTH: 5px
+}
+.NFMultiSelectLeftH {
+	WIDTH: 5px
+}
+.NFMultiSelectLeft {
+	BACKGROUND: url(img/textarea-l-off.png) repeat-y 0px 0px
+}
+.NFMultiSelectLeftH {
+	BACKGROUND: url(img/textarea-l-over.png) repeat-y 0px 0px
+}
+.NFMultiSelectRight {
+	PADDING-BOTTOM: 0px; PADDING-RIGHT: 5px
+}
+.NFMultiSelectRightH {
+	PADDING-BOTTOM: 0px; PADDING-RIGHT: 5px
+}
+.NFMultiSelectRight {
+	BACKGROUND: url(img/textarea-r-off.png) repeat-y 100% 0px
+}
+.NFMultiSelectRightH {
+	BACKGROUND: url(img/textarea-r-over.png) repeat-y 100% 0px
+}
+.NFfocused {
+	BORDER-BOTTOM: #666 1px dotted; BORDER-LEFT: #666 1px dotted; BORDER-TOP: #666 1px dotted; BORDER-RIGHT: #666 1px dotted
+}
+.NFh {
+	BACKGROUND-POSITION: 0px 100%
+}
+.NFhr {
+	BAC
+INPUT {
+	OUTLINE-STYLE: none; OUTLINE-COLOR: invert; OUTLINE-WIDTH: medium; resize: none
+}
+LECT {
+	OUTLINE-STYLE: none; OUTLINE-COLOR: invert; OUTLINE-WIDTH: medium; resize: none
+}
+INPUT {
+	OUTLINE-STYLE: none; OUTLINE-COLOR: invert; OUTLINE-WIDTH: medium; resize: none
+}
+TEXTAREA {
+	OUTLINE-STYLE: none; OUTLINE-COLOR: invert; OUTLINE-WIDTH: medium; resize: none
+}
+BUTTON {
+	OUTLINE-STYLE: none; OUTLINE-COLOR: invert; OUTLINE-WIDTH: medium; resize: none
+}

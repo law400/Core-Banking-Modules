@@ -1,0 +1,15 @@
+<style> .textmode { } </style><div>
+	<table class="table table-striped table-hover" cellspacing="0" cellpadding="3" rules="all" border="1" id="ctl00_ContentPlaceHolder1_GridView1" style="background-color:White;border-color:#CCCCCC;border-width:1px;border-style:None;width:100%;border-collapse:collapse;">
+		<tr style="color:White;background-color:White;font-weight:bold;">
+			<th scope="col" style="background-color:#006699;">S/N</th><th scope="col" style="background-color:#006699;">Employee ID</th><th scope="col" style="background-color:#006699;">Employee Surname</th><th scope="col" style="background-color:#006699;">Employee First Name</th><th scope="col" style="background-color:#006699;">Normal Deduction</th><th scope="col" style="background-color:#006699;">Loan Deduction</th><th scope="col" style="background-color:#006699;">Project Finance</th><th scope="col" style="background-color:#006699;">Total Amount</th><th scope="col" style="background-color:#006699;">Approved Amount</th>
+		</tr><tr style="color:#000066;background-color:White;">
+			<td class="textmode">1</td><td class="textmode">00707</td><td class="textmode">&nbsp;</td><td class="textmode">&nbsp;</td><td class="textmode">10000.00</td><td class="textmode">0.00</td><td class="textmode">10000.00</td><td class="textmode">20000.00</td><td class="textmode">&nbsp;</td>
+		</tr><tr style="color:#000066;background-color:White;">
+			<td class="textmode">2</td><td class="textmode">209</td><td class="textmode">&nbsp;</td><td class="textmode">&nbsp;</td><td class="textmode">1000.00</td><td class="textmode">0.00</td><td class="textmode">0.00</td><td class="textmode">1000.00</td><td class="textmode">&nbsp;</td>
+		</tr><tr style="color:#000066;background-color:White;">
+			<td class="textmode">3</td><td class="textmode">123456789012</td><td class="textmode">&nbsp;</td><td class="textmode">&nbsp;</td><td class="textmode">5000000.00</td><td class="textmode">0.00</td><td class="textmode">0.00</td><td class="textmode">5000000.00</td><td class="textmode">&nbsp;</td>
+		</tr><tr style="color:#000066;background-color:White;">
+			<td class="textmode">4</td><td class="textmode">101289</td><td class="textmode">&nbsp;</td><td class="textmode">&nbsp;</td><td class="textmode">20000.00</td><td class="textmode">0.00</td><td class="textmode">0.00</td><td class="textmode">20000.00</td><td class="textmode">&nbsp;</td>
+		</tr>
+	</table>
+</div>

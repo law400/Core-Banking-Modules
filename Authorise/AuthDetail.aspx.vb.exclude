@@ -1,0 +1,240 @@
+﻿Partial Class Authorise_AuthDetail
+    Inherits System.Web.UI.Page
+    Dim retmsg As String = ""
+    Dim retval As Integer
+    Dim qry As String = ""
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        'LnkCharge.NavigateUrl = "javascript:batchdetail('document.aspnetForm." + txtNoRow.ClientID.ToString() + "');"
+
+        If Page.IsPostBack = False Then
+            Me.Label2.Text = ""
+            Profile.batchno = ""
+            rebind()
+        End If
+        HyperMandate.NavigateUrl = "javascript:Mandate('" + LblAcctNo.Text.ToString() + "');"
+
+
+        'HyperMandate.NavigateUrl = "~/Authorise/Mandate.aspx?field=" + LblAcctNo.Text + ""
+
+    End Sub
+
+    Sub acctdetail(ByVal id As String)
+
+        Dim selacct As String = "Exec Proc_AuthAcct " & id & ""
+
+        If con.SqlDs(selacct).Tables(0).Rows.Count > 0 Then
+            Me.Panel1.Visible = True
+            Dim acctno As String = con.SqlDs(selacct).Tables(0).Rows(0).Item(0).ToString
+            LblAcctNo.Text = acctno
+
+
+            Dim selfind As String = "declare @retval int,@retmsg varchar(22) exec proc_ValidOldAcct '" & acctno.Trim & "',@retval output,@retmsg output select @retval,@retmsg"
+            For Each dr As Data.DataRow In con.SqlDs(selfind).Tables(0).Rows
+                retval = dr(0).ToString
+                retmsg = dr(1).ToString
+            Next
+
+            If retval = "0" Then
+                acctno = retmsg
+            End If
+
+            Dim selExist As String = "Exec Proc_CustAcctDetail '" & acctno & "'"
+            If con.SqlDs(selExist).Tables(0).Rows.Count > 0 Then
+
+                drx = con.SqlDs(selExist).Tables(0).Rows(0)
+                Me.Label11.Text = drx.Item("accounttitle").ToString
+                Me.Label12.Text = drx.Item("prodname").ToString
+                Me.Label3.Text = drx.Item("branch").ToString
+                Me.Label4.Text = smartobj.FormatMoney(Format(drx.Item("bkbal"), "###0.00"))
+                Me.Label5.Text = smartobj.FormatMoney(Format(drx.Item("effbal"), "###0.00"))
+                Me.Label6.Text = smartobj.FormatMoney(Format(drx.Item("usebal"), "###0.00"))
+
+            End If
+
+        Else
+            Me.Panel1.Visible = False
+        End If
+
+    End Sub
+    Sub rebind()
+        Try
+            Session("ss") = ""
+            Dim qry1 As String = ""
+            Dim bacthno As String = ""
+            Dim seltypdesc As String = ""
+            If Request.QueryString("AuthID") <> "" Then
+                Label1.Text = ""
+                Dim id As Integer = Request.QueryString("AuthID")
+                Me.Label1.Text = id
+                qry1 = "exec Proc_AuthdetailList " & Me.Label1.Text.Trim & ""
+
+                Dim seltype As String = "Select searchid,PostType from tbl_authlist where [ID]=" & Me.Label1.Text.Trim & ""
+                For Each drow1 As Data.DataRow In con.SqlDs(seltype).Tables(0).Rows
+                    bacthno = drow1(0).ToString.Trim
+                    seltypdesc = drow1(1).ToString.Trim
+
+                Next
+                If seltypdesc = "Batch" Then
+                    Me.GridView2.Visible = True
+                    Profile.batchno = bacthno
+                    refresh()
+                ElseIf seltypdesc = "Posting" Then
+                    Session("ss") = seltypdesc
+                    acctdetail(bacthno)
+                    Me.GridView2.Visible = False
+
+                Else
+                    Me.LblAcctNo.Text = bacthno
+                    Me.GridView2.Visible = False
+
+                End If
+                '' Profile.trantype = "Setup"
+
+                DetailsView2.Visible = True
+                Me.DetailsView2.DataSource = con.SqlDs(qry1).Tables(0)
+
+                DetailsView2.DataBind()
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Protected Sub BtnAuth_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAuth.Click
+        Try
+            ''If Profile.trantype = "Setup" Then
+            Dim retmsgout As String = ""
+            Me.Label2.Text = ""
+
+            If Me.Label1.Text <> "" Then
+
+                Dim selex As String = "Select accountno from tbl_postlog where accountno='" & Me.Label1.Text.Trim & "'"
+                If con.SqlDs(selex).Tables(0).Rows.Count > 0 Then
+                    Exit Sub
+                Else
+
+                    Dim inst As String = "Insert into tbl_postlog Values ('" & Me.Label1.Text.Trim & "')"
+                    con.SqlDs(inst)
+
+                End If
+
+                Dim selPostAuth As String = "declare @retval int,@retmsg varchar(100) exec Proc_AuthdetailPost " & Me.Label1.Text.Trim & ",'" & Profile.Userid.Trim & "',@retval output,@retmsg output select @retval,@retmsg"
+                For Each drow1 As Data.DataRow In con.SqlDs(selPostAuth).Tables(0).Rows
+                    retval = drow1(0).ToString
+                    retmsgout = drow1(1).ToString
+
+                Next
+
+            End If
+
+            Dim ans As String = ""
+
+            latesttime = CDate(Profile.sysdate)
+            If IsDate(latesttime) Then
+                latesttime = latesttime.AddHours(Now.Hour)
+                latesttime = latesttime.AddMinutes(Now.Minute)
+                latesttime = latesttime.AddSeconds(Now.Second)
+            End If
+
+            Me.txtcomment.Text = Me.txtcomment.Text.Trim & "  Response:" & retmsg.Trim
+            If retval = "0" Then
+                Dim updateauth As String = "Update tbl_authlist set authdate='" & Format(CDate(latesttime), "MM/dd/yyyy hh:mm:ss") & "',narration='" & Me.txtcomment.Text.Trim & "',authstatus='" & "A" & "' where id=" & Me.Label1.Text.Trim & ""
+                con.SqlDs(updateauth)
+                Me.BtnAuth.Enabled = False
+                Me.BtnReject.Enabled = False
+                smartobj.ClearWebPage(Me.Page)
+                rebind()
+
+                smartobj.alertwindow(Me.Page, retmsgout, "Prime")
+
+
+            Else
+                If retval = "165" Or retval = "169" Then
+                    Me.BtnReject0.Visible = True
+                    Me.BtnAuth.Enabled = False
+                    Me.BtnReject.Enabled = True
+
+
+                    retmsgout = "Amount Above Posting Limit. Choose the Forward to Approving Officer Button to Continue"
+                Else
+                    Me.BtnReject0.Visible = False
+                    Me.BtnAuth.Enabled = True
+                    Me.BtnReject.Enabled = True
+
+
+                    smartobj.alertwindow(Me.Page, retmsgout, "Prime")
+                End If
+                ''if Session("ss")="Posting" then
+
+            End If
+            ''smartobj.alertwindow(Me.Page, retmsg, "Prime")
+
+
+            Label2.Text = retmsgout
+            Dim selex1 As String = "Delete from tbl_postlog where accountno='" & Me.Label1.Text.Trim & "'"
+            con.SqlDs(selex1)
+
+            ''End If
+        Catch ex As Exception
+
+            Dim selex1 As String = "Delete from tbl_postlog where accountno='" & Me.Label1.Text.Trim & "'"
+            con.SqlDs(selex1)
+
+            smartobj.alertwindow(Me.Page, "Connecting Server Error", "Prime")
+
+        End Try
+
+    End Sub
+    Protected Sub BtnReject_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject.Click
+        Try
+            '' If Profile.trantype = "Setup" Then
+            ''procedure neccessary set status on the table to 1
+            Dim updateauth As String = "Update tbl_authlist set narration='" & Me.txtcomment.Text.Trim & "',authstatus='" & "R" & "' where id=" & Me.Label1.Text.Trim & ""
+            con.SqlDs(updateauth)
+            smartobj.alertwindow(Me.Page, "Transaction Rejected Successfully", "Prime")
+            rebind()
+            Me.BtnReject.Enabled = False
+            Me.BtnAuth.Enabled = False
+
+            '' End If
+        Catch ex As Exception
+            smartobj.alertwindow(Me.Page, "Connecting Server Error", "Prime")
+
+        End Try
+
+    End Sub
+    Protected Sub BtnReturn_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReturn.Click
+        Response.Redirect("~/Authorise/Auth.aspx?id=" & "out")
+    End Sub
+    Sub refresh()
+        Dim str As String = "exec proc_BatchDetail '" & Profile.batchno & "'"
+        Me.GridView2.DataSource = con.SqlDs(str).Tables(0)
+        Me.GridView2.DataBind()
+        Me.GridView2.Visible = True
+    End Sub
+
+    Protected Sub GridView2_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles GridView2.PageIndexChanging
+        GridView2.PageIndex = e.NewPageIndex
+        refresh()
+
+    End Sub
+
+
+
+    Protected Sub BtnReject0_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject0.Click
+        Try
+            Me.Label2.Text = ""
+            Dim str As String = "Exec proc_NextLevel " & Me.Label1.Text.Trim & ",'" & Profile.Userid.ToString.Trim & "'"
+            con.SqlDs(str)
+
+            BtnReject0.Enabled = False
+            BtnReject.Enabled = False
+            Me.Label2.Text = "Transaction Forwarded To Next Approving Officer"
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    
+End Class

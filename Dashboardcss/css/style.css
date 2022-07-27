@@ -1,0 +1,57 @@
+th {
+	border-right-style: solid;
+	border-top-style: solid; 
+	border-bottom-style: solid!important;
+	text-align: center!important;
+}
+tr {
+	text-align: center!important;
+}
+.table {
+	margin-top: 30px;
+	border-style: solid;
+}
+.top {
+	margin-top: 50px;
+}
+.lower {
+	margin-top: 30px;
+}
+#contribution {
+	background-color: #e722c4;
+}
+#items-request {
+	background-color: #11c92b;
+}
+#loan-request {
+	background-color: #1c4c29;
+}
+#apply-loan {
+	background-color: #3b50ac;
+}
+#view-loan {
+	background-color: #bdbf0c;
+	font-size: 12.5px;
+	/*padding-left: -30px;*/
+}
+#loan-calc {
+	background-color: #e34819;
+}
+#item-sale {
+	background-color: #1d68a2;
+}
+#loan-guarantee {
+	background-color: #4c1c21;
+}
+button {
+	color: #ffffff!important;
+	font-weight: bold!important;
+	border-radius: 5px!important;
+	width: 100%;
+	height: 50px;
+}
+button:hover{
+	opacity: 0.9;
+	color: #000000!important;
+	font-weight: bolder!important;
+}

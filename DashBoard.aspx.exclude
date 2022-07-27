@@ -1,0 +1,493 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Dashboard.aspx.vb" Inherits="Dashboard" %>
+
+<%@ Register assembly="Infragistics35.WebUI.UltraWebGauge.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" namespace="Infragistics.WebUI.UltraWebGauge" tagprefix="igGauge" %>
+<%@ Register assembly="Infragistics35.WebUI.UltraWebGauge.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" namespace="Infragistics.UltraGauge.Resources" tagprefix="igGaugeProp" %>
+<%@ Register assembly="Infragistics35.WebUI.UltraWebChart.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" namespace="Infragistics.WebUI.UltraWebChart" tagprefix="igchart" %>
+<%@ Register assembly="Infragistics35.WebUI.UltraWebChart.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" namespace="Infragistics.UltraChart.Resources.Appearance" tagprefix="igchartprop" %>
+<%@ Register assembly="Infragistics35.WebUI.UltraWebChart.v9.1, Version=9.1.20091.1015, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" namespace="Infragistics.UltraChart.Data" tagprefix="igchartdata" %>
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Web.UI" tagprefix="telerik" %>
+<%@ Register assembly="Telerik.Web.UI" namespace="Telerik.Charting" tagprefix="telerik" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Untitled Page</title>
+    <style type="text/css">
+        #form1
+        {
+            height: 1013px;
+        }
+        .style1
+        {
+            width: 100%;
+        }
+        .style2
+        {
+            width: 116px;
+        }
+        .style4
+        {
+            width: 262px;
+        }
+        .style5
+        {
+            width: 340px;
+        }
+        .style6
+        {
+            width: 323px;
+        }
+        .style7
+        {
+            width: 151px;
+        }
+    button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button,input,select,textarea{font-family:inherit;font-size:inherit;line-height:inherit}input{line-height:normal}button,input,optgroup,select,textarea{margin:0;font:inherit;color:inherit}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*,:after,:before{color:#000!important;text-shadow:none!important;background:0 0!important;-webkit-box-shadow:none!important;box-shadow:none!important}
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server" 
+    
+    
+    style="background-position: center; background-repeat: no-repeat; background-color: #FDFDFD;">
+    <div style="height: 350px; margin-left: 48px;">
+    
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:Label ID="Label5" runat="server" Font-Size="XX-Large" ForeColor="#FF6666" 
+            Text="COOPERATIVE DASHBOARD" Font-Bold="True"></asp:Label>
+        <br />
+    
+        <br />
+        <table class="style1" style="border: thin solid #9999FF">
+            <tr>
+                <td class="style5">
+                    <asp:Button ID="Button1" runat="server" Text="Return" />
+                </td>
+                <td class="style6">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <asp:Label ID="Label9" runat="server" Font-Bold="True" Font-Size="Medium" 
+                        ForeColor="#9900CC" Text="OUTREACH INDICATORS"></asp:Label>
+                </td>
+                <td class="style7">
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style5">
+                    <asp:Label ID="Label6" runat="server" ForeColor="#0033CC" 
+                        Text="Number of Loans Outstanding: "></asp:Label>
+                    <asp:Label ID="lbl_LoanOutstanding" runat="server"></asp:Label>
+                </td>
+                <td class="style6">
+                    <asp:Label ID="Label8" runat="server" ForeColor="#0033CC" 
+                        Text="Number of Active Borrowers: "></asp:Label>
+                    <asp:Label ID="lbl_ActiveBorrow" runat="server"></asp:Label>
+                </td>
+                <td class="style7">
+                    <asp:Label ID="Label10" runat="server" ForeColor="#0033CC" 
+                        Text="Loans to be paid today:"></asp:Label>
+                </td>
+                <td>
+                    <asp:Label ID="lblLoanPaid" runat="server" ForeColor="Black"></asp:Label>
+                </td>
+            </tr>
+        </table>
+    
+        <br />
+        <table class="style1">
+            <tr>
+                <td class="style2">
+                    &nbsp;</td>
+                <td class="style4">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    <telerik:RadChart ID="RadChart7" runat="server" DataSourceID="SqlDataSource1" 
+                        SeriesOrientation="Horizontal" Skin="Web" Width="550px">
+                        <Series>
+<telerik:ChartSeries Name="Capital/Asset Ratio" DataYColumn="Capital/Asset Ratio">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="97, 131, 217">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="97, 131, 217" />
+                    <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+<telerik:ChartSeries Name="Deposit To Loans" DataYColumn="Deposit To Loans">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="255, 153, 0">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="255, 153, 0" />
+                    <telerik:GradientElement Color="241, 241, 241" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+                            <telerik:ChartSeries DataYColumn="Deposit To Assets" Name="Deposit To Assets">
+                                <Appearance>
+                                    <FillStyle FillType="ComplexGradient" MainColor="172, 203, 45">
+                                        <FillSettings>
+                                            <ComplexGradient>
+                                                <telerik:GradientElement Color="172, 203, 45" />
+                                                <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                                            </ComplexGradient>
+                                        </FillSettings>
+                                    </FillStyle>
+                                </Appearance>
+                            </telerik:ChartSeries>
+                            <telerik:ChartSeries DataYColumn="Loan Portfolio To Total Assets" 
+                                Name="Loan Portfolio To Total Assets">
+                            </telerik:ChartSeries>
+</Series>
+                        <PlotArea>
+                            <XAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                </Appearance>
+                                <AxisLabel>
+                                    <Appearance RotationAngle="270">
+                                    </Appearance>
+                                </AxisLabel>
+                            </XAxis>
+                            <YAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223" 
+                                    MinorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                    <MinorGridLines Color="165, 190, 223" Width="0" />
+                                </Appearance>
+                                <AxisLabel>
+                                    <Appearance RotationAngle="0">
+                                    </Appearance>
+                                </AxisLabel>
+                            </YAxis>
+                            <YAxis2>
+                                <AxisLabel>
+                                    <Appearance RotationAngle="0">
+                                    </Appearance>
+                                </AxisLabel>
+                            </YAxis2>
+                            <Appearance Dimensions-Margins="18%, 23%, 12%, 10%">
+                                <FillStyle FillType="Solid" MainColor="249, 250, 251">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </PlotArea>
+                        <Appearance>
+                            <FillStyle MainColor="249, 250, 251">
+                            </FillStyle>
+                            <Border Color="103, 136, 190" />
+                        </Appearance>
+                        <ChartTitle>
+                            <Appearance Dimensions-Margins="4%, 10px, 14px, 6%">
+                            </Appearance>
+                            <TextBlock Text="FINANCE STRUCTURE %">
+                                <Appearance TextProperties-Color="0, 0, 102">
+                                </Appearance>
+                            </TextBlock>
+                        </ChartTitle>
+                        <Legend>
+                            <Appearance>
+                                <FillStyle MainColor="231, 241, 255">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </Legend>
+                    </telerik:RadChart>
+                </td>
+                <td class="style4">
+                    <telerik:RadChart ID="RadChart8" runat="server" DataSourceID="SqlDataSource2" 
+                        SeriesOrientation="Horizontal" Skin="Web" Width="500px">
+                        <Series>
+<telerik:ChartSeries Name="ROA" DataYColumn="ROA">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="97, 131, 217">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="97, 131, 217" />
+                    <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+<telerik:ChartSeries Name="ROE" DataYColumn="ROE">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="255, 153, 0">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="255, 153, 0" />
+                    <telerik:GradientElement Color="241, 241, 241" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+                            <telerik:ChartSeries DataYColumn="NET MARGIN" Name="NET MARGIN">
+                                <Appearance>
+                                    <FillStyle FillType="ComplexGradient" MainColor="172, 203, 45">
+                                        <FillSettings>
+                                            <ComplexGradient>
+                                                <telerik:GradientElement Color="172, 203, 45" />
+                                                <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                                            </ComplexGradient>
+                                        </FillSettings>
+                                    </FillStyle>
+                                </Appearance>
+                            </telerik:ChartSeries>
+                            <telerik:ChartSeries DataYColumn="OPERATIONAL SUFFICIENCY" 
+                                Name="OPERATIONAL SUFFICIENCY">
+                            </telerik:ChartSeries>
+</Series>
+                        <PlotArea>
+                            <XAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                </Appearance>
+                                <AxisLabel>
+                                    <Appearance RotationAngle="270">
+                                    </Appearance>
+                                </AxisLabel>
+                            </XAxis>
+                            <YAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223" 
+                                    MinorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                    <MinorGridLines Color="165, 190, 223" Width="0" />
+                                </Appearance>
+                                <AxisLabel>
+                                    <Appearance RotationAngle="0">
+                                    </Appearance>
+                                </AxisLabel>
+                            </YAxis>
+                            <YAxis2>
+                                <AxisLabel>
+                                    <Appearance RotationAngle="0">
+                                    </Appearance>
+                                </AxisLabel>
+                            </YAxis2>
+                            <Appearance Dimensions-Margins="18%, 23%, 12%, 10%">
+                                <FillStyle FillType="Solid" MainColor="249, 250, 251">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </PlotArea>
+                        <Appearance>
+                            <FillStyle MainColor="249, 250, 251">
+                            </FillStyle>
+                            <Border Color="103, 136, 190" />
+                        </Appearance>
+                        <ChartTitle>
+                            <Appearance Dimensions-Margins="4%, 10px, 14px, 6%">
+                            </Appearance>
+                            <TextBlock Text="FINANCIAL PERFORMANCE %">
+                                <Appearance TextProperties-Color="0, 0, 102">
+                                </Appearance>
+                            </TextBlock>
+                        </ChartTitle>
+                        <Legend>
+                            <Appearance>
+                                <FillStyle MainColor="231, 241, 255">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </Legend>
+                    </telerik:RadChart>
+                </td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    <telerik:RadChart ID="RadChart9" runat="server" DataSourceID="SqlDataSource3" 
+                        Skin="Web" Width="550px">
+                        <Series>
+<telerik:ChartSeries Name="PAR &gt; 30" DataYColumn="PAR &gt; 30">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="97, 131, 217">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="97, 131, 217" />
+                    <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+<telerik:ChartSeries Name="PAR &gt; 90" DataYColumn="PAR &gt; 90">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="255, 153, 0">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="255, 153, 0" />
+                    <telerik:GradientElement Color="241, 241, 241" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+</Series>
+                        <PlotArea>
+                            <XAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                </Appearance>
+                            </XAxis>
+                            <YAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223" 
+                                    MinorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                    <MinorGridLines Color="165, 190, 223" Width="0" />
+                                </Appearance>
+                            </YAxis>
+                            <Appearance Dimensions-Margins="18%, 23%, 12%, 10%">
+                                <FillStyle FillType="Solid" MainColor="249, 250, 251">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </PlotArea>
+                        <Appearance>
+                            <FillStyle MainColor="249, 250, 251">
+                            </FillStyle>
+                            <Border Color="103, 136, 190" />
+                        </Appearance>
+                        <ChartTitle>
+                            <Appearance Dimensions-Margins="4%, 10px, 14px, 6%">
+                            </Appearance>
+                            <TextBlock Text="RISK AND LIQUIDITY %">
+                            </TextBlock>
+                        </ChartTitle>
+                        <Legend>
+                            <Appearance>
+                                <FillStyle MainColor="231, 241, 255">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </Legend>
+                    </telerik:RadChart>
+                </td>
+                <td class="style4">
+                    <telerik:RadChart ID="RadChart1" runat="server" DataSourceID="SqlDataSource4" 
+                        Skin="Web" Width="500px">
+                        <Series>
+<telerik:ChartSeries Name="Jan" DataYColumn="Jan">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="97, 131, 217">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="97, 131, 217" />
+                    <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+<telerik:ChartSeries Name="Feb" DataYColumn="Feb">
+    <Appearance>
+        <FillStyle FillType="ComplexGradient" MainColor="255, 153, 0">
+            <FillSettings>
+                <ComplexGradient>
+                    <telerik:GradientElement Color="255, 153, 0" />
+                    <telerik:GradientElement Color="241, 241, 241" Position="1" />
+                </ComplexGradient>
+            </FillSettings>
+        </FillStyle>
+    </Appearance>
+                            </telerik:ChartSeries>
+                            <telerik:ChartSeries DataYColumn="Mar" Name="Mar">
+                                <Appearance>
+                                    <FillStyle FillType="ComplexGradient" MainColor="172, 203, 45">
+                                        <FillSettings>
+                                            <ComplexGradient>
+                                                <telerik:GradientElement Color="172, 203, 45" />
+                                                <telerik:GradientElement Color="194, 194, 194" Position="1" />
+                                            </ComplexGradient>
+                                        </FillSettings>
+                                    </FillStyle>
+                                </Appearance>
+                            </telerik:ChartSeries>
+</Series>
+                        <PlotArea>
+                            <XAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                </Appearance>
+                            </XAxis>
+                            <YAxis>
+                                <Appearance Color="165, 190, 223" MajorTick-Color="165, 190, 223" 
+                                    MinorTick-Color="165, 190, 223">
+                                    <MajorGridLines Color="165, 190, 223" />
+                                    <MinorGridLines Color="165, 190, 223" Width="0" />
+                                </Appearance>
+                            </YAxis>
+                            <Appearance Dimensions-Margins="18%, 23%, 12%, 10%">
+                                <FillStyle FillType="Solid" MainColor="249, 250, 251">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </PlotArea>
+                        <Appearance>
+                            <FillStyle MainColor="249, 250, 251">
+                            </FillStyle>
+                            <Border Color="103, 136, 190" />
+                        </Appearance>
+                        <ChartTitle>
+                            <Appearance Dimensions-Margins="4%, 10px, 14px, 6%">
+                            </Appearance>
+                            <TextBlock Text="LOAN PORTFOLIO">
+                                <Appearance TextProperties-Color="0, 0, 102">
+                                </Appearance>
+                            </TextBlock>
+                        </ChartTitle>
+                        <Legend>
+                            <Appearance>
+                                <FillStyle MainColor="231, 241, 255">
+                                </FillStyle>
+                                <Border Color="165, 190, 223" />
+                            </Appearance>
+                        </Legend>
+                    </telerik:RadChart>
+                </td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    &nbsp;</td>
+                <td class="style4">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="style2">
+                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        
+                        SelectCommand="SELECT [ROA], [ROE], [NET_MARGIN] 'NET MARGIN', [OPERATIONALSUFFICIENCY] 'OPERATIONAL SUFFICIENCY' FROM [Tbl_Dashboard_DW1]">
+                    </asp:SqlDataSource>
+                </td>
+                <td class="style4">
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        
+                        SelectCommand="select CapitalAsset 'Capital/Asset Ratio',Deposit_To_Loans 'Deposit To Loans',
+Deposit_To_Assets 'Deposit To Assets',Loan_To_Assets 'Loan Portfolio To Total Assets' from Tbl_Dashboard_DW1 ">
+                    </asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSource3" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        SelectCommand="SELECT [PAR_30] 'PAR &gt; 30', [PAR_90] 'PAR &gt; 90' FROM [Tbl_Dashboard_DW1]">
+                    </asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSource4" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:Prime %>" 
+                        SelectCommand="SELECT [Jan], [Feb], [Mar] FROM [Tbl_Dashboard_LoanPortfolio]">
+                    </asp:SqlDataSource>
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+    </form>
+</body>
+</html>

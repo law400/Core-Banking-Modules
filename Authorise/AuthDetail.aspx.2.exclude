@@ -1,0 +1,217 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="AuthDetail.aspx.vb" Inherits="Authorise_AuthDetail" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+    <title>Authorization Detail Page</title>
+    <link href="../style.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+
+
+a
+{
+	color: #000000;
+	margin-left: 0px;
+}
+
+        .style1
+        {
+            width: 100%;
+        }
+
+        .style2
+        {
+            height: 17px;
+            width: 214px;
+        }
+
+    </style>
+    <script language="javascript" type="text/javascript" >
+    function Mandate(strTxtRef)
+			{										 									 
+				window.open('./Mandate.aspx?field=' + strTxtRef +'','MandatePopup','titlebar=no,left=50,top=100,width=650,height=500,resizable=no');				
+			}	
+			  </script>
+</head>
+<body>
+    <form id="form1" runat="server">&nbsp;<asp:ScriptManager ID="ScriptManager1" runat="server">
+            </asp:ScriptManager>
+            <asp:UpdatePanel id="updatePanel" runat="server">
+<ContentTemplate>
+ <asp:UpdateProgress ID="UpdateProgress1" runat="server" 
+            AssociatedUpdatePanelID="updatePanel">
+        <ProgressTemplate>
+        <div style="position: fixed; text-align: center; height: 100%; width: 100%; top: 0; right: 0; left: 0; z-index: 9999999; background-color: #D7D7FF; ">
+            <asp:Image ID="imgUpdateProgress" runat="server" ImageUrl="~/images/loading.gif" AlternateText="Loading ..." ToolTip="Loading ..." style="padding: 10px;position:fixed;top:45%;left:50%;" />
+        </div>
+    </ProgressTemplate>
+        </asp:UpdateProgress>
+            <div class="post boxed">
+			<h2 class="title" style="width: 276px; color: #FFFFFF;">Authorization Detail<span style="color: #000099; font-size: 12pt;"><asp:Label ID="LblAcctNo" runat="server" Visible="False"></asp:Label>
+                </span></h2>
+			<div class="story">
+			<table style="width: 588px; font-size: 8pt; height: 469px;">
+        <tr>
+            <td colspan="2" style="text-align: left; height: 4px;">
+                <span style="color: #000099; font-size: 12pt;"><strong></strong>
+                <asp:Label ID="Label2" runat="server" style="color: #FF3300; font-weight: 700"></asp:Label>
+                </span></td>
+        </tr>
+                <tr>
+                    <td style="height: 17px" colspan="2">
+                        <asp:Label ID="Label1" runat="server" Visible="False"></asp:Label>
+                        <br />
+                        <asp:Panel ID="Panel1" runat="server" Visible="False">
+                            <table class="style1">
+                                <tr>
+                                    <td>
+                                        <table style="width: 241px; background-color: #ccccff">
+                                            <tr>
+                                                <td colspan="2" style="height: 22px; background-color: #000099;">
+                                                    <span style="font-weight: bold; font-size: 12pt; color: #ffff00">Account Info</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 222px; height: 15px; font-weight: bold; color: black;">
+                                                    Account Name:&nbsp;</td>
+                                                <td style="width: 100px; height: 15px">
+                                                    <asp:Label ID="Label11" runat="server" ForeColor="Black" Width="124px"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 222px">
+                                                    <strong><span style="color: #000000">Product Name &nbsp;:&nbsp;</span></strong></td>
+                                                <td style="width: 100px">
+                                                    <asp:Label ID="Label12" runat="server" ForeColor="Black" Width="128px"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 222px">
+                                                    <strong><span style="color: #000000">Branch:&nbsp;</span></strong></td>
+                                                <td style="width: 100px">
+                                                    <asp:Label ID="Label3" runat="server" ForeColor="Black" Width="126px"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 222px">
+                                                    <strong style="font-weight: bold; color: black">Book Balance:&nbsp;</strong></td>
+                                                <td style="width: 100px">
+                                                    <asp:Label ID="Label4" runat="server" ForeColor="Black" Width="125px"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 222px; height: 18px">
+                                                    <strong style="font-weight: bold; color: black">Effective Balance:&nbsp;</strong></td>
+                                                <td style="width: 100px; height: 18px">
+                                                    <asp:Label ID="Label5" runat="server" ForeColor="Black" Width="126px"></asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 222px; height: 18px">
+                                                    <strong><span style="color: black; font-weight: bold;">Usable Balance:</span></strong></td>
+                                                <td style="width: 100px; height: 18px">
+                                                    <asp:Label ID="Label6" runat="server" ForeColor="Black" Width="125px"></asp:Label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        &nbsp;</td>
+                                </tr>
+                            </table>
+                        </asp:Panel>
+                    </td>
+                </tr>
+        <tr>
+            <td class="style2">
+                <asp:Button ID="BtnReturn" runat="server" Text="Return" Width="63px" />
+                                        <asp:HyperLink ID="HyperMandate" runat="server" Font-Size="X-Large" 
+                                            ForeColor="Red" Font-Underline="True">View Mandate</asp:HyperLink>
+                                    </td>
+            <td style="height: 17px">
+                &nbsp;<asp:Button ID="BtnAuth" runat="server" Text="Authorise" Width="90px" />
+                <asp:Button ID="BtnReject" runat="server" Text="Reject" Width="75px" />
+                <asp:Button ID="BtnReject0" runat="server" Text="Forward to Approving Officer" 
+                    Width="178px" Visible="False" /></td>
+        </tr>
+        <tr>
+            <td style="height: 17px" colspan="2">
+    
+                <asp:DetailsView ID="DetailsView2" runat="server" BackColor="White"
+        BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3"
+        GridLines="Horizontal" Height="50px" Width="467px" Visible="False">
+                    <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
+                    <EditRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
+                    <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
+                    <PagerStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" HorizontalAlign="Right" />
+                    <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
+                    <AlternatingRowStyle BackColor="#F7F7F7" />
+                </asp:DetailsView>
+			</td>
+        </tr>
+        <tr>
+            <td style="height: 17px" colspan="2">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="height: 17px" colspan="2">
+        <table style="width: 470px; font-size: 8pt;">
+            <tr>
+                <td style="width: 144px; height: 17px">
+                    Authorization Comment</td>
+                <td style="height: 17px">
+                    <asp:TextBox ID="txtcomment" runat="server" TextMode="MultiLine" Width="301px"></asp:TextBox></td>
+            </tr>
+        </table>
+            </td>
+        </tr>
+        <tr>
+            <td class="style2">
+                &nbsp;</td>
+            <td style="height: 17px">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="height: 17px" colspan="2">
+        <div id="sidebar">
+                    
+                 <asp:GridView ID="GridView2" runat="server" AllowPaging="True" 
+                                        AutoGenerateColumns="False" Font-Size="XX-Small" 
+                        Height="59px" 
+                                        Width="498px">
+                                        <Columns>
+                                            <asp:BoundField DataField="accountnumber" HeaderText="AccountNumber" />
+                                            <asp:BoundField DataField="accounttitle" HeaderText="Account Name" />
+                                            <asp:BoundField DataField="Valuedate" DataFormatString="{0:dd/MM/yyyy}" 
+                                                HeaderText="Value Date" HtmlEncode="False">
+                                                <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="Narration" HeaderText="Narration" 
+                                                HtmlEncode="False">
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="TranAmount" DataFormatString="{0:n}" 
+                                                HeaderText="Amount" HtmlEncode="False" >
+                                                <HeaderStyle HorizontalAlign="Left" />
+                                            </asp:BoundField>
+                                        </Columns>
+                                        <RowStyle BackColor="White" Font-Size="8pt" ForeColor="#003399" />
+                                        <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                                        <PagerStyle BackColor="#99CCCC" ForeColor="#003399" HorizontalAlign="Left" />
+                                        <HeaderStyle BackColor="#003399" Font-Bold="True" ForeColor="#CCCCFF" />
+                                    </asp:GridView>
+        </div>
+    
+            </td>
+        </tr>
+    </table>	
+    
+			</div>
+			<div class="meta">
+			</div>
+		</div>
+        &nbsp;
+        <br />
+        </ContentTemplate> 
+    </asp:UpdatePanel>
+    </form>
+</body>
+</html>

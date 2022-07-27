@@ -1,0 +1,111 @@
+
+
+
+
+
+
+          RUN DATE: 22-AUG-2014 19:08:07
+
+     THIRD PARTY DEDUCTIONS                       GHANA GOVERNMENT PAYROLL SYSTEM           ORACLE HRMS              PAGE: 1773
+
+LIST OF DEDUCTIONS FOR THE MONTH OF AUGUST 2014
+
+                                   Hire Purchase Ded             Africa Trust Microfinance Ltd Ded
+
+MANAGEMENT UNIT                 STAFF_ID   OLD_ID     NAME OF EMPLOYEE           ORIGINAL AMOUNT  BAL B/FWRD     MONTHLY DED 
+
+0101 Ghana Broadcasting Corpor  00826518  6773        Mr. Johnson T. Amonoo                               .00             .00
+
+0101 Public Procurement Auth -  00751543  XXXXXXXXXX  Mr. Tanko  Aminu                                    .00           18.22
+
+0201 Scientific Research Into   00753319  XXXXXXXXXX  Mr. George  Ebili                                   .00             .00
+
+0208 MESW: Social Welfare Dept  00920502  XXXXXXXXXX  Mr. Eric Kwabena Bediako                            .00           10.48
+
+0215 MLF: Forestry Commission   00874111  SFS0008     Mr. Henry  Gyapong                                  .00           32.04
+
+0509 Judicial Service - Admin,  00016230  GOV479852A  Mr. Gideon B Fumey                                  .00             .00
+
+0600 MLGRD:  Community Dev. As  00920266  XXXXXXXXXX  Miss Cynthia Barfi Oppong                           .00           30.00
+
+0609 MOE:  Dist Non-Formal Edu  00689469  XXXXXXXXXX  Mr. Ibrahim  Bagna                                  .00           29.75
+
+0609 MOFA: Atwima Dadu - DAES   00769845  XXXXXXXXXX  Mr. Innocent  Osei Bonsu Prempeh                    .00             .00
+
+0609 MOFA: Atwima Dadu - DAES   00769845  XXXXXXXXXX  Mr. Innocent  Osei Bonsu Prempeh                    .00             .00
+
+0611 CSIR Building and Road Re  00909503  BRRI000151  Mr. Akuoku  Debrah                                  .00             .00
+
+0611 CSIR Grains Dev Project -  00910120  GGDPOO1114  Mr. Hayford  Asiedu-Boateng                         .00           75.24
+
+0611 CSIR Grains Dev Project -  00910120  GGDPOO1114  Mr. Hayford  Asiedu-Boateng                         .00           38.50
+
+0611 GHS: Juaben Government Ho  00763629  XXXXXXXXXX  Miss Akosua Korantemaa Asante                       .00           77.70
+
+0611 Nat Commission for Civic   00803615  XXXXXXXXXX  Mrs. Felicia  Afful                                 .00          147.00
+
+0611 Nat Commission for Civic   00803615  XXXXXXXXXX  Mrs. Felicia  Afful                                 .00           61.25
+
+0613 MLF: Forestry Commission   00875459  T0287       Mr. Samuel  Addo                                    .00          157.87
+
+0613 MLF: Forestry Commission   00875068  T0631       Mr. Sakyi  Collins                                  .00          129.50
+
+0613 MOH: Komfo Anokye General  00734445  XXXXXXXXXX  Mrs. Nancy B. Agyeman                               .00          178.50
+
+0613 MRT:  Urban Roads Dept, K  00102017  GOV427221U  Mr. Abdulai  Iddrissu                               .00           51.48
+
+0613 Nat Voc Training Inst - B  00866330  XXXXXXXXXX  Mr. Jacob Nana Wiredu Twumasi                       .00          257.40
+
+0614 GHS: Afigya Sekyere Distr  00609072  XXXXXXXXXX  Mr. Andrew  Amankwah                                .00          416.50
+
+0614 GHS: Afigya Sekyere Distr  00687803  XXXXXXXXXX  Mr. Isaac  Bonyah                                   .00             .00
+
+0617 GHS: Sekyere East Sub-Dis  00692754  XXXXXXXXXX  Miss Esther  Owusu                                  .00          112.00
+
+0617 Ghana National Fire Servi  00094472  GOV470675R  Miss Mary  Yeboah                                   .00           20.00
+
+0617 Ghana National Fire Servi  00028346  GOV471947D  Mr. Owusu  Kwabena                                  .00           30.10
+
+
+
+
+
+          RUN DATE: 22-AUG-2014 19:08:07
+
+     THIRD PARTY DEDUCTIONS                       GHANA GOVERNMENT PAYROLL SYSTEM           ORACLE HRMS              PAGE: 1774
+
+LIST OF DEDUCTIONS FOR THE MONTH OF AUGUST 2014
+
+                                   Hire Purchase Ded             Africa Trust Microfinance Ltd Ded
+
+MANAGEMENT UNIT                 STAFF_ID   OLD_ID     NAME OF EMPLOYEE           ORIGINAL AMOUNT  BAL B/FWRD     MONTHLY DED 
+
+0617 Judicial Service - Admin,  00726224  XXXXXXXXXX  Mr. Kwaku  Sarpong                                  .00           20.00
+
+0617 MINT: NADMO Sekyere East   00919390  XXXXXXXXXX  Mr. Bernard  Nkansah-Boateng                        .00           30.00
+
+0617 MOFA:   Sekyere-East Dadu  00130386  GOV041542F  Mrs. Bertha  Asare                                  .00             .00
+
+0617 NBSSI                      00640160  NBSSI-575   Mr. Kwasi  Owusu                                    .00          100.00
+
+0619 GHS: Cocoa Hospital, Tepa  00153775  GOV040503N  Mr. Alfred A Boateng                                .00           53.38
+
+0619 GHS: Cocoa Hospital, Tepa  00153775  GOV040503N  Mr. Alfred A Boateng                                .00           30.00
+
+0715 MLGRD:  Techiman Administ  00753541  XXXXXXXXXX  Mr. Kwame Achew Owusu                               .00          129.50
+
+0715 MLGRD:  Techiman Assembly  00070418  GOV264253H  Mr. Fred  Addai                                     .00           54.27
+
+0715 MLGRD:  Techiman Assembly  00070418  GOV264253H  Mr. Fred  Addai                                     .00             .00
+
+0715 MLGRD:  Techiman Assembly  00663960  XXXXXXXXXX  Mr. Abdullai Ziblim  Issifu                         .00          171.50
+
+0715 MLGRD:  Techiman Assembly  00775862  XXXXXXXXXX  Mr. Evans Kwaku Kyeremeh                            .00             .00
+
+     STAFF STRENGTH            37          TOTAL AMOUNT :                                      .0      2,462.18
+
+
+
+
+
+

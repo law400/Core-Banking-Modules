@@ -1,0 +1,167 @@
+﻿<%@ Master Language="VB" CodeFile="PrimeApp2.master.vb" Inherits="PrimeApp" %>
+<%@ Register src="menu.ascx" tagname="menu" tagprefix="uc1" %>
+<%@ Register src="Alertl.ascx" tagname="Alertl" tagprefix="uc2" %>
+<%@ Register
+    Assembly="AjaxControlToolkit"
+    Namespace="AjaxControlToolkit"
+    TagPrefix="ajaxToolkit" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Master Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+
+    
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <script language="javascript" type="text/javascript" >
+        function calendarPicker(strTxtRef) {
+            window.open('./Controls/Calendar.aspx?field=' + strTxtRef + '', 'calendarPopup', 'titlebar=no,left=50,top=100,width=300,height=250,resizable=no');
+        }
+        function calculator(strTxtRef) {
+            window.open('./Controls/calculator.aspx?field=' + strTxtRef + '', 'calendarPopup', 'titlebar=yes,left=50,top=100,width=400,height=550,resizable=no');
+        }
+
+        function accountPicker(strTxtRef) {
+            window.open('./AccountEnquiry.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=650,height=500,resizable=no');
+        }
+
+        function accountGLPicker(strTxtRef) {
+            window.open('./GLCustEnquiry.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=650,height=600,resizable=no');
+        }
+        function glaccountPicker(strTxtRef) {
+            window.open('./glEnquiry.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=550,height=600,resizable=no');
+        }
+        function loandetail(strTxtRef) {
+            window.open('./loandetail.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=800,top=100,width=500,height=700,resizable=no');
+        }
+        function TDdetail(strTxtRef) {
+            window.open('./TDdetail.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=800,top=100,width=500,height=700,resizable=no');
+        }
+
+
+
+        function Chgdetail(strTxtRef) {
+            window.open('./Chargedet1.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=-10,top=50,width=400,height=500,resizable=no');
+        }
+
+        function acctdetail(strTxtRef) {
+            window.open('./AccountHist.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=50,top=100,width=650,height=500,resizable=no');
+        }
+
+        function Chgdetail2(strTxtRef) {
+            window.open('./Chargedet1.aspx?field=' + strTxtRef + '', 'accountPopup', 'titlebar=no,left=900,top=50,width=400,height=300,resizable=no');
+        }
+
+        function staff(strTxtRef) {
+            window.open('./staffenqry.aspx?field=' + strTxtRef + '', 'staffPopup', 'titlebar=no,left=50,top=100,width=700,height=400,resizable=no');
+        }
+
+
+        function customer(strTxtRef) {
+            window.open('./custenquiry.aspx?field=' + strTxtRef + '', 'staffPopup', 'titlebar=no,scroll=true,left=50,top=100,width=700,height=600,resizable=no');
+        }
+        function customer2(strTxtRef) {
+            window.open('./custenquiry2.aspx?field=' + strTxtRef + '', 'staffPopup', 'titlebar=no,scroll=true,left=50,top=100,width=700,height=600,resizable=no');
+        }
+        function authPicker2(strTxtRef) {
+            window.open('./Authorise.aspx?field=' + strTxtRef + '', 'authorisePopup', 'titlebar=no,left=50,top=100,width=650,height=450,resizable=no');
+        }
+
+        function interestPicker(strTxtRef) {
+            window.open('./interesthist.aspx?id=' + strTxtRef + '', 'interestPopup', 'titlebar=no,left=50,top=100,width=650,height=450,resizable=no');
+        }
+
+        function authPicker(strTxtRef) {
+            window.open('./Override.aspx?field=' + strTxtRef + '', 'authorisePopup', 'titlebar=no,left=50,top=100,width=250,height=250,resizable=no');
+        }
+
+
+        function payPicker(strTxtRef) {
+            window.open('./pointing.aspx?field=' + strTxtRef + '', 'authorisePopup', 'titlebar=no,left=50,top=100,width=250,height=250,resizable=no');
+        }
+
+        var nHist = window.history.length;
+        if (window.history[nHist] != window.location)
+            window.history.forward();
+    </script>
+       
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css"/>
+   
+    <!-- Theme style -->
+     <link rel="stylesheet" href="dist/font-awesome.min.css"/>
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="dist/ionicons.min.css"/>
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"/>
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css"/>
+      <link href="bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css"href="Styles.css"  />
+    <link rel="stylesheet" type="text/css" href="css/datatables.css"  />
+
+    <style type="text/css">
+        .auto-style1 {
+            color: #FF0066;
+        }
+    </style>
+ </head>
+
+<body style="background-color: #F8F8F8;background-repeat: repeat;">
+   <div class="hold-transition skin-blue sidebar-mini" style="background-color: #F8F8F8; background-repeat: repeat;">
+    <form id="form1" runat="server" autocomplete="off">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" AsyncPostBackTimeout="36000">
+            </asp:ScriptManager>
+  
+        <asp:Panel ID="Panel2" runat="server" Width="250px" BackColor="White" ForeColor="#0000CC"  BorderWidth="2" BorderStyle="solid"  Style="z-index: 1; text-align: left" CssClass="callout callout-info" Visible="False">    
+    &nbsp;&nbsp;SYSTEM DATE:&nbsp;<asp:Label ID="Label2" runat="server" style="font-weight: 700; color: #FF0000;"></asp:Label><br />&nbsp;&nbsp;LOGIN USERID:&nbsp;<asp:Label ID="Label1" runat="server" style="font-weight: 700; color: #FF0000;"></asp:Label><br />&nbsp;&nbsp;LOGIN USERNAME:&nbsp;<asp:Label ID="Label6" runat="server" style="font-weight: 700; color: #FF0000;"></asp:Label><br />&nbsp;&nbsp;APPROVING OFFICER:&nbsp;<asp:Label ID="Label5" runat="server"  style="font-weight: 700; color: #FF0000;"></asp:Label>
+    </asp:Panel>
+        <ajaxToolkit:AlwaysVisibleControlExtender ID="Viz2" runat="server"    
+    TargetControlID="Panel2" HorizontalSide="Right" VerticalSide="Bottom" HorizontalOffset="20"    
+    VerticalOffset="20" ScrollEffectDuration=".1" UseAnimation="True"></ajaxToolkit:AlwaysVisibleControlExtender>
+
+   
+          <div class="form-group">
+                <h4>
+       
+                        <asp:Label ID="Label3" runat="server" ForeColor="#FF0066"></asp:Label>
+                        <span class="auto-style1">||</span><asp:Label ID="Label4" runat="server" CssClass="auto-style1" ForeColor="#FF0066"></asp:Label>&nbsp;
+                        
+                        </h4>
+        </div>
+      
+            <div class="form-group">
+                    <uc2:alertl ID="Alertl1" runat="server" />
+                    </div>
+    
+         
+ <%--<div class="box box-warning ">
+                <div class="box-header with-border">
+       <div id="colTwo" class="form-group "style="width: 1116px; text-align: center;">--%>
+        <div class="box box-solid" style="width: 96.8%; margin-left: 18px;">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+            </div>
+	<%--</div>
+                    </div>
+       </div>--%>
+	
+           <div class ="box-footer">
+	           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	           Copyright &copy; 2016 <a href= "http://www.cwlgroup.com" target= "_blank" > Computer Warehouse Group PLC</a>. All rights reserved.
+            </div>
+    
+    </form>
+    <script type="text/javascript" src="js/bootstrap-toolkit.min.js"></script>
+<!-- Your scripts using Responsive Bootstrap Toolkit -->
+<script type="text/javascript" src="js/main.js"></script>
+
+       </div>
+</body>
+</html>

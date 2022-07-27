@@ -1,0 +1,740 @@
+﻿Imports log4net
+Imports log4net.Config
+
+Partial Class Authorise_AuthDetail
+    Inherits System.Web.UI.Page
+    Dim retmsg As String = ""
+    Dim retval As Integer
+    Dim qry As String = ""
+    Dim logger As ILog = log4net.LogManager.GetLogger(GetType(Authorise_AuthDetail))
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        'LnkCharge.NavigateUrl = "javascript:batchdetail('document.aspnetForm." + txtNoRow.ClientID.ToString() + "');"
+
+        If Page.IsPostBack = False Then
+            Me.Label2.Text = ""
+            Profile.batchno = ""
+            rebind()
+        End If
+        HyperMandate.NavigateUrl = "javascript:Mandate('" + LblAcctNo.Text.ToString() + "');"
+
+
+        'HyperMandate.NavigateUrl = "~/Authorise/Mandate.aspx?field=" + LblAcctNo.Text + ""
+
+    End Sub
+
+    Sub acctdetail(ByVal id As String)
+
+        Dim selacct As String = "Exec Proc_AuthAcct " & id & ""
+
+        If con.SqlDs(selacct).Tables(0).Rows.Count > 0 Then
+            Me.Panel1.Visible = True
+            Dim acctno As String = con.SqlDs(selacct).Tables(0).Rows(0).Item(0).ToString
+            LblAcctNo.Text = acctno
+
+
+            Dim selfind As String = "declare @retval int,@retmsg varchar(22) exec proc_ValidOldAcct '" & acctno.Trim & "',@retval output,@retmsg output select @retval,@retmsg"
+            For Each dr As Data.DataRow In con.SqlDs(selfind).Tables(0).Rows
+                retval = dr(0).ToString
+                retmsg = dr(1).ToString
+            Next
+
+            If retval = "0" Then
+                acctno = retmsg
+            End If
+
+            Dim selExist As String = "Exec Proc_CustAcctDetail '" & acctno & "'"
+            If con.SqlDs(selExist).Tables(0).Rows.Count > 0 Then
+
+                drx = con.SqlDs(selExist).Tables(0).Rows(0)
+                Me.Label11.Text = drx.Item("accounttitle").ToString
+                Me.Label12.Text = drx.Item("prodname").ToString
+                Me.Label3.Text = drx.Item("branch").ToString
+                Me.Label4.Text = smartobj.FormatMoney(Format(drx.Item("bkbal"), "###0.00"))
+                Me.Label5.Text = smartobj.FormatMoney(Format(drx.Item("effbal"), "###0.00"))
+                Me.Label6.Text = smartobj.FormatMoney(Format(drx.Item("usebal"), "###0.00"))
+
+            End If
+
+        Else
+            Me.Panel1.Visible = False
+        End If
+
+    End Sub
+    Sub rebind()
+        Try
+            Session("ss") = ""
+            Dim qry1 As String = ""
+            Dim bacthno As String = ""
+            Dim seltypdesc As String = ""
+            If Request.QueryString("AuthID") <> "" Then
+                Label1.Text = ""
+                Dim id As Integer = Request.QueryString("AuthID")
+                Me.Label1.Text = id
+                qry1 = "exec Proc_AuthdetailList " & Me.Label1.Text.Trim & ""
+
+                Dim seltype As String = "Select searchid,PostType from tbl_authlist where [ID]=" & Me.Label1.Text.Trim & ""
+                For Each drow1 As Data.DataRow In con.SqlDs(seltype).Tables(0).Rows
+                    bacthno = drow1(0).ToString.Trim
+                    seltypdesc = drow1(1).ToString.Trim
+
+                Next
+                If seltypdesc = "Batch" Then
+                    Me.GridView2.Visible = True
+                    Profile.batchno = bacthno
+                    refresh()
+                ElseIf seltypdesc = "Posting" Then
+                    Session("ss") = seltypdesc
+                    acctdetail(bacthno)
+                    Me.GridView2.Visible = False
+
+                ElseIf seltypdesc = "Buy_from_Vault" Then
+
+                    Me.LblAcctNo.Text = bacthno
+                    Me.GridView2.Visible = False
+                    Me.HyperMandate.Visible = False
+
+                ElseIf seltypdesc = "Sell_to_Vault" Then
+
+                    Me.LblAcctNo.Text = bacthno
+                    Me.GridView2.Visible = False
+                    Me.HyperMandate.Visible = False
+
+                Else
+                    Me.LblAcctNo.Text = bacthno
+                    Me.GridView2.Visible = False
+
+                End If
+                '' Profile.trantype = "Setup"
+
+                DetailsView2.Visible = True
+                Me.DetailsView2.DataSource = con.SqlDs(qry1).Tables(0)
+
+                DetailsView2.DataBind()
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Protected Sub BtnAuth_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnAuth.Click
+        Try
+            ''If Profile.trantype = "Setup" Then
+            Dim retmsgout As String = "" : Dim postype As String = "" : Dim searchid As String = "" : Dim authdesc As String = ""
+            Dim debitacct As String = "" : Dim creditacct As String = ""
+            Me.Label2.Text = ""
+            Dim debittran As String = "" : Dim credittran As String = ""
+            Dim flexCubeDebitAcct As String = ""
+            Dim flexCubeCreditAcct As String = ""
+            Dim FetchPostSeq As String = ""
+            Dim QryStrings As String = ""
+            Dim TranID As String = ""
+            Dim Narration As String = ""
+            Dim ReturnMsg As String = ""
+            Dim TranRef As String = ""
+            Dim PostSeq As String = ""
+            Dim TranAmount As Decimal = Nothing
+
+            If Me.Label1.Text <> "" Then
+
+                'Dim selex As String = "Select accountno from tbl_postlog where accountno='" & Me.Label1.Text.Trim & "'"
+                'If con.SqlDs(selex).Tables(0).Rows.Count > 0 Then
+                '    Exit Sub
+                'Else
+
+                '    Dim inst As String = "Insert into tbl_postlog Values ('" & Me.Label1.Text.Trim & "')"
+                '    con.SqlDs(inst)
+
+                'End If
+                ''''''''**************************************************SECTION DBN***********************************************************'
+
+                Dim qry_getparam As String = "Select Ltrim(Rtrim(Posttype)) 'posttype',searchid,authdesc from tbl_authlist where id=" & Me.Label1.Text.Trim & ""
+
+                If con.SqlDs(qry_getparam).Tables(0).Rows.Count > 0 Then
+                    drx = con.SqlDs(qry_getparam).Tables(0).Rows(0)
+                    postype = drx.Item("posttype").ToString.Trim
+                    searchid = drx.Item("searchid").ToString.Trim
+                    authdesc = drx.Item("authdesc").ToString.Trim
+
+
+
+                Else
+
+                    smartobj.alertwindow(Me.Page, "Unable to resolve transaction post type", "Prime")
+
+                    Exit Sub
+                End If
+                ''''''''''''''''''''''Batch 1''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+                Dim qry_getparam2 As String = "Select Tranamount, Ltrim(Rtrim(account1)) 'account1',Ltrim(Rtrim(account2)) 'account2' from tbl_transactionstemp where id='" & searchid & "'"
+                If con.SqlDs(qry_getparam2).Tables(0).Rows.Count > 0 Then
+                    drx = con.SqlDs(qry_getparam2).Tables(0).Rows(0)
+                    debitacct = drx.Item("account1").ToString.Trim
+                    creditacct = drx.Item("account2").ToString.Trim
+                    TranAmount = drx.Item("Tranamount")
+
+                Else
+               smartobj.alertwindow(Me.Page, "Unable to resolve posting account", "Prime")
+
+                    Exit Sub
+                End If
+
+ FetchPostSeq = "Declare @PostSeq int,@TranRef varchar(30) exec Proc_Services_Fetch_PostSEQ @PostSeq Output,@TranRef output select @PostSeq,@TranRef"
+
+                    For Each dr As Data.DataRow In con.SqlDs(FetchPostSeq).Tables(0).Rows
+
+                        PostSeq = dr(0).ToString
+                        TranRef = dr(1).ToString
+
+
+                    Next
+
+                    If TranRef = "XXXX" Then   '''''Indicate that Tran Reference could not be generated
+                        smartobj.alertwindow(Me.Page, "ERROR: Error in generating Transaction Reference", "Prime")
+                        'lblDisplay.Text = ""
+                        'lblDisplay.Visible = False
+
+                        Exit Sub
+
+                    Else
+                        TranID = TranRef
+                    End If
+
+
+                If postype = "Buy_from_Vault" Then
+
+
+
+                    Dim Dbn_branchcode As String = "" : Dim branchcode As String = ""
+
+                    Dim strbr As String = "Select Ltrim(Rtrim(Branchcode)) 'Branchcode' from tbl_bankgl where glnumber='" & debitacct & "'"
+                    branchcode = con.SqlDs(strbr).Tables(0).Rows(0).Item(0).ToString
+
+                    Dim qry_dbnbranch As String = "Select Ltrim(Rtrim(Branchcode)) 'branchcode' from tbl_branch where BranchCode='" & branchcode & "'"
+
+                    If con.SqlDs(qry_dbnbranch).Tables(0).Rows.Count > 0 Then
+                        drx = con.SqlDs(qry_dbnbranch).Tables(0).Rows(0)
+                        Dbn_branchcode = drx.Item("branchcode").ToString.Trim
+
+
+                    Else
+
+                        smartobj.alertwindow(Me.Page, "Unable to resolve DBN Branch Code", "Prime")
+
+                        Exit Sub
+                    End If
+
+                    '''''''''''''''''''''''''''''''''''''''''''''''''''''''END BATCH 1''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+                    'Dim selacc As String = "Select a.branchcode,postGl_Acctno,cashaccount from tbl_UserProfile a,tbl_branch b where a.branchcode=b.branchcode and a.userid='" & Profile.Userid.Trim & "'"
+                    'If con.SqlDs(selacc).Tables(0).Rows.Count > 0 Then
+                    '    drx = con.SqlDs(selacc).Tables(0).Rows(0)
+                    '    glnumber = drx.Item("postGl_Acctno").ToString.Trim
+                    '    branchcode = drx.Item("branchcode").ToString.Trim
+                    '    cashacct = drx.Item("cashaccount").ToString.Trim
+                    'Else
+                    '    smartobj.alertwindow(Me.Page, "You Do Not Have Posting Right", "Prime")
+                    '    smartobj.ClearWebPage(Me.Page)
+                    '    Exit Sub
+                    'End If
+
+
+                    'Dim selacc2 As String = "Select accountnumber from tbl_headteller where branchcode='" & branchcode & "' and status=1"
+                    'If con.SqlDs(selacc2).Tables(0).Rows.Count > 0 Then
+                    '    drx = con.SqlDs(selacc2).Tables(0).Rows(0)
+                    '    headteller = drx.Item("accountnumber").ToString.Trim
+
+                    'Else
+                    '    smartobj.alertwindow(Me.Page, "No Head Teller Assigned to your Branch", "Prime")
+                    '    smartobj.ClearWebPage(Me.Page)
+                    '    Exit Sub
+                    'End If
+
+
+                    ''*********************************DBN VAULT IN AND VAULT OUT OPERATION *******************************
+
+
+
+                   
+
+                    ''debitacct = Me.txtGLNumber0.Text.Trim
+                    ''creditacct = Me.txtGLNumber.Text.Trim
+                    debittran = "512"
+                    credittran = "035"
+                    Narration = "Buy Cash From Vault,"
+                    QryStrings = "Declare @DBNDebitAcctnumber Varchar(22),@DBNCreditAcctnumber Varchar(22),@retval int,@retmsg varchar(100) exec proc_Services_Fetch_XAAS_DBN_ACCT '" & debitacct & "'," & _
+                    "'" & creditacct & "',@DBNDebitAcctnumber output,@DBNCreditAcctnumber output,@retval output,@retmsg output select @DBNDebitAcctnumber,@DBNCreditAcctnumber, @retval ,@retmsg"
+
+                    For Each dr As Data.DataRow In con.SqlDs(QryStrings).Tables(0).Rows
+                        flexCubeDebitAcct = dr(0).ToString
+                        flexCubeCreditAcct = dr(1).ToString
+                        retval = dr(2).ToString
+                        retmsg = dr(3).ToString
+
+
+                    Next
+
+                    If retval <> 0 Then
+                        smartobj.alertwindow(Me.Page, retmsg, "Prime")
+                        'lblDisplay.Text = ""
+                        'lblDisplay.Visible = False
+
+                        Exit Sub
+                    Else
+                        If Dbn_branchcode = "" Then
+                            smartobj.alertwindow(Me.Page, "Invalid Branch Code", "Prime")
+                            Exit Sub
+                        End If
+
+                        '''''''''''''''''''''INSERT INTO VAULT RECONCILIATION TABLE HERE---------------------''''''
+                        ''''''AT EOD, SYSTEM CHECKS ALL ENTRIES IN THIS TABLE TO KNOW IF ENTRY EXISTS IN XAAS TRANSACTION TABLE''
+                        ''''''THEN IT PUSHES TRANSACTION FOUND IN RECONCILIATION TABLE BUT NOT FOUND IN XAAS TRAN TABLE FOR REVERSAL
+                        '''''''IN FLEXCUBE, IT ALSO ATTEMPTS TO PUSH FOUND TRANSACTION IN XAAS TRAN TABLE AND RECONCILIATION TABLE
+
+                        'Dim StringReconc As String = "Exec proc_Services_Ins_Vault_Reconciliation '" & flexCubeCreditAcct & "','" & TranID & "','Buy Cash From Vault','" & Dbn_branchcode & "'," & CDec(Me.txtDR1.Text.Trim) & ",'OUT' "
+                        Dim StringReconc As String = "Exec proc_Services_Ins_Vault_Reconciliation '" & flexCubeCreditAcct & "','" & TranID & "','Buy Cash From Vault','" & Dbn_branchcode & "'," & TranAmount & ",'OUT' "
+
+                        con.SqlDs(StringReconc)
+
+                        If CallDYWebservice_VaultOut(Dbn_branchcode, TranAmount, "Buy Cash From Vault", TranID, flexCubeCreditAcct) = True Then
+                            ''smartobj.alertwindow(Me.Page, "Vault Out Transaction Successful on DBN DB: " + retmsg, "Prime")
+                            ReturnMsg = "Vault Out Transaction Successful on DBN DB"
+                            GoTo CHECK
+                        Else
+                            smartobj.alertwindow(Me.Page, "Vault Out Transaction Failed on DBN, hence transaction cannot continue", "Prime")
+                            'lblDisplay.Text = ""
+                            'lblDisplay.Visible = False
+
+                            Exit Sub
+                        End If
+
+                    End If
+                ElseIf postype = "Sell_to_Vault" Then
+
+                    Dim Dbn_branchcode As String = "" : Dim branchcode As String = ""
+
+                    Dim strbr As String = "Select Ltrim(Rtrim(Branchcode)) 'Branchcode' from tbl_bankgl where glnumber='" & creditacct & "'"
+                    branchcode = con.SqlDs(strbr).Tables(0).Rows(0).Item(0).ToString
+
+                    Dim qry_dbnbranch As String = "Select Ltrim(Rtrim(Branchcode)) 'branchcode' from tbl_branch where BranchCode='" & branchcode & "'"
+
+                    If con.SqlDs(qry_dbnbranch).Tables(0).Rows.Count > 0 Then
+                        drx = con.SqlDs(qry_dbnbranch).Tables(0).Rows(0)
+                        Dbn_branchcode = drx.Item("branchcode").ToString.Trim
+
+
+                    Else
+
+                        smartobj.alertwindow(Me.Page, "Unable to resolve DBN Branch Code", "Prime")
+
+                        Exit Sub
+                    End If
+                    debittran = "538"
+                    credittran = "012"
+                    Narration = "Sell Cash to Vault"
+                    QryStrings = "Declare @DBNDebitAcctnumber Varchar(22),@DBNCreditAcctnumber Varchar(22),@retval int,@retmsg varchar(100) exec proc_Services_Fetch_XAAS_DBN_ACCT '" & debitacct & "'," & _
+                    "'" & creditacct & "',@DBNDebitAcctnumber output,@DBNCreditAcctnumber output,@retval output,@retmsg output select @DBNDebitAcctnumber,@DBNCreditAcctnumber, @retval ,@retmsg"
+
+                    For Each dr As Data.DataRow In con.SqlDs(QryStrings).Tables(0).Rows
+                        flexCubeDebitAcct = dr(0).ToString
+                        flexCubeCreditAcct = dr(1).ToString
+                        retval = dr(2).ToString
+                        retmsg = dr(3).ToString
+                    Next
+
+                    If retval <> 0 Then
+                        smartobj.alertwindow(Me.Page, retmsg, "Prime")
+                        'lblDisplay.Text = ""
+                        'lblDisplay.Visible = False
+
+                        Exit Sub
+                    Else
+                        If Dbn_branchcode = "" Then
+                            smartobj.alertwindow(Me.Page, "Invalid Branch Code", "Prime")
+                            Exit Sub
+                        End If
+
+
+                        '''''''''''''''''''''INSERT INTO VAULT RECONCILIATION TABLE HERE---------------------''''''
+                        ''''''AT EOD, SYSTEM CHECKS ALL ENTRIES IN THIS TABLE TO KNOW IF ENTRY EXISTS IN XAAS TRANSACTION TABLE''
+                        ''''''THEN IT PUSHES TRANSACTION FOUND IN RECONCILIATION TABLE BUT NOT FOUND IN XAAS TRAN TABLE FOR REVERSAL
+                        '''''''IN FLEXCUBE, IT ALSO ATTEMPTS TO PUSH FOUND TRANSACTION IN XAAS TRAN TABLE AND RECONCILIATION TABLE
+
+                        '' Dim StringReconc As String = "Exec proc_Services_Ins_Vault_Reconciliation '" & flexCubeDebitAcct & "','" & TranID & "','Sell Cash to Vault','" & Dbn_branchcode & "'," & CDec(Me.txtDR1.Text.Trim) & ",'IN' "
+
+                        Dim StringReconc As String = "Exec proc_Services_Ins_Vault_Reconciliation '" & flexCubeDebitAcct & "','" & TranID & "','Sell Cash to Vault','" & Dbn_branchcode & "'," & TranAmount & ",'IN' "
+
+                        con.SqlDs(StringReconc)
+
+                        If CallDYWebservice_VaultIn(Dbn_branchcode, TranAmount, "Sell Cash to Vault", TranID, flexCubeDebitAcct) = True Then
+                            '  smartobj.alertwindow(Me.Page, "Vault In Transaction Successful on DBN DB: " + retmsg, "Prime")
+                            ReturnMsg = "Vault In Transaction Successful on DBN DB"
+                            GoTo CHECK
+                        Else
+                            smartobj.alertwindow(Me.Page, "Vault In Transaction Failed on DBN DB, hence transaction cannot continue ", "Prime")
+                            'lblDisplay.Text = ""
+                            'lblDisplay.Visible = False
+
+                            Exit Sub
+
+                        End If
+
+                    End If
+
+                End If
+
+
+                ''''''''''''''''''''****************************************************************************************************************************
+CHECK:
+                Dim selPostAuth As String = "declare @retval int,@retmsg varchar(100) exec Proc_Services_AuthdetailPost_DBN " & Me.Label1.Text.Trim & ",'" & Profile.Userid.Trim & "'," & PostSeq & ",@retval output,@retmsg output select @retval,@retmsg"
+                For Each drow1 As Data.DataRow In con.SqlDs(selPostAuth).Tables(0).Rows
+                    retval = drow1(0).ToString
+                    retmsgout = drow1(1).ToString
+
+                Next
+
+            End If
+
+            Dim ans As String = ""
+
+            latesttime = CDate(Profile.sysdate)
+            If IsDate(latesttime) Then
+                latesttime = latesttime.AddHours(Now.Hour)
+                latesttime = latesttime.AddMinutes(Now.Minute)
+                latesttime = latesttime.AddSeconds(Now.Second)
+            End If
+
+            Me.txtcomment.Text = Me.txtcomment.Text.Trim & "  Response:" & retmsgout.Trim
+            If retval = "0" Then
+                Dim updateauth As String = "Update tbl_authlist set postseq = '" & PostSeq & "', authdate='" & Format(CDate(latesttime), "MM/dd/yyyy hh:mm:ss") & "',narration='" & Me.txtcomment.Text.Trim & "',authstatus='" & "A" & "' where id=" & Me.Label1.Text.Trim & ""
+                con.SqlDs(updateauth)
+                Me.BtnAuth.Enabled = False
+                Me.BtnReject.Enabled = False
+                smartobj.ClearWebPage(Me.Page)
+                rebind()
+
+                smartobj.alertwindow(Me.Page, retmsgout, "Prime")
+
+
+            Else
+                If retval = "165" Or retval = "169" Then
+                    Me.BtnReject0.Visible = True
+                    Me.BtnAuth.Enabled = False
+                    Me.BtnReject.Enabled = True
+
+
+                    retmsgout = "Amount Above Posting Limit. Choose the Forward to Approving Officer Button to Continue"
+                Else
+                    Me.BtnReject0.Visible = False
+                    Me.BtnAuth.Enabled = True
+                    Me.BtnReject.Enabled = True
+
+
+                    smartobj.alertwindow(Me.Page, retmsgout, "Prime")
+                End If
+                ''if Session("ss")="Posting" then
+
+            End If
+            ''smartobj.alertwindow(Me.Page, retmsg, "Prime")
+
+
+            Label2.Text = retmsgout
+            Dim selex1 As String = "Delete from tbl_postlog where accountno='" & Me.Label1.Text.Trim & "'"
+            con.SqlDs(selex1)
+
+            ''End If
+        Catch ex As Exception
+
+            Dim selex1 As String = "Delete from tbl_postlog where accountno='" & Me.Label1.Text.Trim & "'"
+            con.SqlDs(selex1)
+
+            smartobj.alertwindow(Me.Page, "Connecting Server Error", "Prime")
+
+        End Try
+
+    End Sub
+    Private Function CallDYWebservice_VaultIn(ByVal Branchcode As String, ByVal Amount As String, ByVal Narration As String, ByVal TranRef As String, ByVal AccountNo As String) As Boolean
+        Try
+            Dim DBNService As New DBNFlexCubeService.diamondYelloConnect
+            ' Dim Amount2 As Decimal = Val(Amount)
+
+            Dim Amount2 As Decimal = CDec(Amount)
+            '' --Amount2 = Convert.ToDecimal(Amount)
+
+            logger.Info("************************************************************************************************************************************************************************]" _
+               & vbNewLine & "VAULT IN TRANSACTION START FOR DBN VAULT:" & Narration & " STARTING... [*******************]" _
+               & vbNewLine & "   <<<<Direction: INPUT" _
+                     & vbNewLine & "      INPUT PARAMETERS LIST & " _
+                     & vbNewLine & "          BRANCH CODE: '" & Branchcode & "'" _
+                     & vbNewLine & "          NARRATION: '" & Narration & "'" _
+                     & vbNewLine & "          ACCOUNT NUMBER: '" & AccountNo & "'" _
+                     & vbNewLine & "          TRAN REF: '" & TranRef & "'" _
+                     & vbNewLine & "          AMOUNT: '" & Amount2 & "'" _
+                     & vbNewLine & "       INPUT PARAMETERS LIST END" & " ")
+
+            Dim bankoneresponse As DBNFlexCubeService.bankoneOutputResponse = DBNService.tellerVaultIn(Branchcode, Amount2, Narration, TranRef, AccountNo)
+
+
+            'Dim retVal As Boolean = bankoneresponse.Status
+            'Dim retmsg As String = bankoneresponse.StatusMessage
+            'Dim TransactionRef As String = bankoneresponse.TransactionReference
+
+            'If retVal = True Then
+            If bankoneresponse.Status = True Then
+                logger.Info("VAULT IN TRANSACTION END FOR DBN VAULT'" & Narration & " : '" & bankoneresponse.Status & "'' " _
+      & vbNewLine & "   <<<<Direction: OUTPUT" _
+      & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+      & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+      & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+      & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+      & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return True
+            Else
+                ''Console.WriteLine(((("Successfully created account for msisdn" + customerInf.MobilePhone & " Account Number:'") + Response.AccountNumber & "' Customer ID:'") + Response.CustomerID & "' Message:'") + Response.Retmsg & "'")
+                logger.Info("VAULT IN TRANSACTION END FOR DBN VAULT'" & Narration & " : '" & bankoneresponse.Status & "'' " _
+     & vbNewLine & "   <<<<Direction: OUTPUT" _
+     & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+     & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+     & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+     & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+     & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return False
+            End If
+        Catch Ex As Exception
+            logger.Info("TRY CATCH ERROR'" & Narration & " : 'Failed' " _
+                & vbNewLine & "   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" _
+                & vbNewLine & "      EXCEPTION LIST & " _
+                & vbNewLine & "          Exception: '" & Ex.Message & "'" _
+                & vbNewLine & "       EXCEPTION LIST END----------'" & " " _
+                & vbNewLine & "************************************************************************************************************************************************************************************")
+            'smartobj.alertwindow(Me.Page, Ex.Message.ToString, "Prime")
+
+            Dim Amount3 As Decimal = CDec(Amount)
+            CallDYWebservice_VaultIn_Reversal(Amount3, TranRef)
+
+            Return False
+        End Try
+
+    End Function
+    Private Function CallDYWebservice_VaultOut(ByVal Branchcode As String, ByVal Amount As String, ByVal Narration As String, ByVal TranRef As String, ByVal AccountNo As String) As Boolean
+        Try
+            Dim DBNService As New DBNFlexCubeService.diamondYelloConnect
+
+            '' --Amount2 = Convert.ToDecimal(Amount)
+            ' Dim Amount2 As Decimal = Val(Amount)
+            Dim Amount2 As Decimal = CDec(Amount)
+
+            logger.Info("************************************************************************************************************************************************************************]" _
+               & vbNewLine & "VAULT OUT TRANSACTION START FOR DBN VAULT:" & Narration & " STARTING... [*******************]" _
+               & vbNewLine & "   <<<<Direction: INPUT" _
+                     & vbNewLine & "      INPUT PARAMETERS LIST & " _
+                     & vbNewLine & "          BRANCH CODE: '" & Branchcode & "'" _
+                     & vbNewLine & "          NARRATION: '" & Narration & "'" _
+                     & vbNewLine & "          ACCOUNT NUMBER: '" & AccountNo & "'" _
+                     & vbNewLine & "          TRAN REF: '" & TranRef & "'" _
+                     & vbNewLine & "          AMOUNT: '" & Amount2 & "'" _
+                     & vbNewLine & "       INPUT PARAMETERS LIST END" & " ")
+
+
+
+            Dim bankoneresponse As DBNFlexCubeService.bankoneOutputResponse = DBNService.tellerVaultOut(Branchcode, Amount2, Narration, TranRef, AccountNo)
+
+            'Dim retVal As Boolean = bankoneresponse.Status
+            'Dim retmsg As String = bankoneresponse.StatusMessage
+            'Dim TransactionRef As String = bankoneresponse.TransactionReference
+
+            ''If retVal = True Then
+            If bankoneresponse.Status = True Then
+                logger.Info("VAULT OUT TRANSACTION START END DBN VAULT'" & Narration & " : '" & bankoneresponse.Status & "'' " _
+      & vbNewLine & "   <<<<Direction: OUTPUT" _
+      & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+      & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+      & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+      & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+      & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return True
+            Else
+                ''Console.WriteLine(((("Successfully created account for msisdn" + customerInf.MobilePhone & " Account Number:'") + Response.AccountNumber & "' Customer ID:'") + Response.CustomerID & "' Message:'") + Response.Retmsg & "'")
+                logger.Info("VAULT OUT TRANSACTION END FOR DBN VAULT'" & Narration & " : '" & bankoneresponse.Status & "'' " _
+     & vbNewLine & "   <<<<Direction: OUTPUT" _
+     & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+     & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+     & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+     & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+     & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return False
+            End If
+        Catch Ex As Exception
+            logger.Info("TRY CATCH ERROR'" & Narration & " : 'Failed' " _
+     & vbNewLine & "   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" _
+     & vbNewLine & "      EXCEPTION LIST & " _
+     & vbNewLine & "          Exception: '" & Ex.Message & "'" _
+     & vbNewLine & "       EXCEPTION LIST END----------'" & " " _
+     & vbNewLine & "************************************************************************************************************************************************************************************")
+            'smartobj.alertwindow(Me.Page, Ex.Message.ToString, "Prime")
+            Return False
+        End Try
+
+    End Function
+    Private Function CallDYWebservice_VaultIn_Reversal(ByVal Amount As String, ByVal TranRef As String) As Boolean
+        Try
+            Dim DBNService As New DBNFlexCubeService.diamondYelloConnect
+            Dim Amount2 As Decimal = CDec(Amount)
+            '' --Amount2 = Convert.ToDecimal(Amount)
+
+            logger.Info("************************************************************************************************************************************************************************]" _
+               & vbNewLine & "VAULT IN REVERSAL TRANSACTION START FOR DBN VAULT:" & TranRef & " STARTING... [*******************]" _
+               & vbNewLine & "   <<<<Direction: INPUT" _
+                     & vbNewLine & "      INPUT PARAMETERS LIST & " _
+                     & vbNewLine & "          TRAN REF: '" & TranRef & "'" _
+                     & vbNewLine & "          AMOUNT: '" & Amount2 & "'" _
+                     & vbNewLine & "       INPUT PARAMETERS LIST END" & " ")
+
+            Dim bankoneresponse As DBNFlexCubeService.bankoneOutputResponse = DBNService.vaultInReversal(Amount2, TranRef)
+
+
+            'Dim retVal As Boolean = bankoneresponse.Status
+            'Dim retmsg As String = bankoneresponse.StatusMessage
+            'Dim TransactionRef As String = bankoneresponse.TransactionReference
+
+            If bankoneresponse.Status = True Then
+                logger.Info("VAULT IN REVERSAL TRANSACTION END FOR DBN VAULT TRANREF'" & TranRef & " : '" & bankoneresponse.Status & "'' " _
+      & vbNewLine & "   <<<<Direction: OUTPUT" _
+      & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+      & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+      & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+      & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+      & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return True
+            Else
+                ''Console.WriteLine(((("Successfully created account for msisdn" + customerInf.MobilePhone & " Account Number:'") + Response.AccountNumber & "' Customer ID:'") + Response.CustomerID & "' Message:'") + Response.Retmsg & "'")
+                logger.Info("VAULT IN REVERSAL TRANSACTION END FOR DBN VAULT TRANREF'" & TranRef & " : '" & bankoneresponse.Status & "'' " _
+     & vbNewLine & "   <<<<Direction: OUTPUT" _
+     & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+     & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+     & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+     & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+     & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return False
+            End If
+        Catch Ex As Exception
+            logger.Info("TRY CATCH ERROR'" & TranRef & " : 'Failed'' " _
+                & vbNewLine & "   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" _
+                & vbNewLine & "      EXCEPTION LIST & " _
+                & vbNewLine & "          Exception: '" & Ex.Message.ToString & "'" _
+                & vbNewLine & "       EXCEPTION LIST END----------'" & " " _
+                & vbNewLine & "************************************************************************************************************************************************************************************")
+            'smartobj.alertwindow(Me.Page, Ex.Message.ToString, "Prime")
+            Return False
+        End Try
+
+    End Function
+    Private Function CallDYWebservice_VaultOut_Reversal(ByVal Amount As String, ByVal TranRef As String) As Boolean
+        Try
+            Dim DBNService As New DBNFlexCubeService.diamondYelloConnect
+            Dim Amount2 As Decimal = CDec(Amount)
+            '' --Amount2 = Convert.ToDecimal(Amount)
+
+            logger.Info("************************************************************************************************************************************************************************]" _
+               & vbNewLine & "VAULT OUT REVERSAL TRANSACTION START FOR DBN VAULT:" & TranRef & " STARTING... [*******************]" _
+               & vbNewLine & "   <<<<Direction: INPUT" _
+                     & vbNewLine & "      INPUT PARAMETERS LIST & " _
+                     & vbNewLine & "          TRAN REF: '" & TranRef & "'" _
+                     & vbNewLine & "          AMOUNT: '" & Amount2 & "'" _
+                     & vbNewLine & "       INPUT PARAMETERS LIST END" & " ")
+
+            Dim bankoneresponse As DBNFlexCubeService.bankoneOutputResponse = DBNService.vaultOutReversal(Amount2, TranRef)
+
+
+            'Dim retVal As Boolean = bankoneresponse.Status
+            'Dim retmsg As String = bankoneresponse.StatusMessage
+            'Dim TransactionRef As String = bankoneresponse.TransactionReference
+
+            If bankoneresponse.Status = True Then
+                logger.Info("VAULT OUT REVERSAL TRANSACTION END FOR DBN VAULT TRANREF'" & TranRef & " : '" & bankoneresponse.Status & "'' " _
+      & vbNewLine & "   <<<<Direction: OUTPUT" _
+      & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+      & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+      & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+      & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+      & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return True
+            Else
+                ''Console.WriteLine(((("Successfully created account for msisdn" + customerInf.MobilePhone & " Account Number:'") + Response.AccountNumber & "' Customer ID:'") + Response.CustomerID & "' Message:'") + Response.Retmsg & "'")
+                logger.Info("VAULT OUT REVERSAL TRANSACTION END FOR DBN VAULT TRANREF'" & TranRef & " : '" & bankoneresponse.Status & "'' " _
+     & vbNewLine & "   <<<<Direction: OUTPUT" _
+     & vbNewLine & "      OUTPUT PARAMETERS LIST & " _
+     & vbNewLine & "          RetVal: '" & bankoneresponse.Status & "'" _
+     & vbNewLine & "          RetMsg: '" & bankoneresponse.StatusMessage & "'" _
+     & vbNewLine & "       OUTPUT PARAMETERS LIST END----------'" & bankoneresponse.Status & "'" & " " _
+     & vbNewLine & "************************************************************************************************************************************************************************************")
+                Return False
+            End If
+        Catch Ex As Exception
+            logger.Info("TRY CATCH ERROR'" & TranRef & " : 'Failed '' " _
+                & vbNewLine & "   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" _
+                & vbNewLine & "      EXCEPTION LIST & " _
+                & vbNewLine & "          Exception: '" & Ex.Message.ToString & "'" _
+                & vbNewLine & "       EXCEPTION LIST END----------'" & " " _
+                & vbNewLine & "************************************************************************************************************************************************************************************")
+            'smartobj.alertwindow(Me.Page, Ex.Message.ToString, "Prime")
+
+            Dim Amount3 As Decimal = CDec(Amount)
+            CallDYWebservice_VaultOut_Reversal(Amount3, TranRef)
+            Return False
+        End Try
+
+    End Function
+    Protected Sub BtnReject_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject.Click
+        Try
+            '' If Profile.trantype = "Setup" Then
+            ''procedure neccessary set status on the table to 1
+            Dim updateauth As String = "Update tbl_authlist set narration='" & Me.txtcomment.Text.Trim & "',authstatus='" & "R" & "' where id=" & Me.Label1.Text.Trim & ""
+            con.SqlDs(updateauth)
+            smartobj.alertwindow(Me.Page, "Transaction Rejected Successfully", "Prime")
+            rebind()
+            Me.BtnReject.Enabled = False
+            Me.BtnAuth.Enabled = False
+
+            '' End If
+        Catch ex As Exception
+            smartobj.alertwindow(Me.Page, "Connecting Server Error", "Prime")
+
+        End Try
+
+    End Sub
+    Protected Sub BtnReturn_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReturn.Click
+        Response.Redirect("~/Authorise/Auth.aspx?id=" & "out")
+    End Sub
+    Sub refresh()
+        Dim str As String = "exec proc_BatchDetail '" & Profile.batchno & "'"
+        Me.GridView2.DataSource = con.SqlDs(str).Tables(0)
+        Me.GridView2.DataBind()
+        Me.GridView2.Visible = True
+    End Sub
+
+    Protected Sub GridView2_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles GridView2.PageIndexChanging
+        GridView2.PageIndex = e.NewPageIndex
+        refresh()
+
+    End Sub
+
+
+
+    Protected Sub BtnReject0_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles BtnReject0.Click
+        Try
+            Me.Label2.Text = ""
+            Dim str As String = "Exec proc_NextLevel " & Me.Label1.Text.Trim & ",'" & Profile.Userid.ToString.Trim & "'"
+            con.SqlDs(str)
+
+            BtnReject0.Enabled = False
+            BtnReject.Enabled = False
+            Me.Label2.Text = "Transaction Forwarded To Next Approving Officer"
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
+End Class
